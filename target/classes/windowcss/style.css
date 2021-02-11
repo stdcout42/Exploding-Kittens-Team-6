@@ -1,0 +1,8 @@
+#playbutton, #optionsbutton  {
+    -fx-background-color: linear-gradient(to right top, #d4a112, #dbae10, #e1bc0f, #e7ca0f, #ebd812);
+    -fx-background-radius: 10;
+}
+
+#playbutton:hover, #optionsbutton:hover {
+    -fx-background-color: red;
+}

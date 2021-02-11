@@ -1,8 +1,23 @@
 package softwaredesign.controller;
 
-import com.jfoenix.controls.JFXButton;
 import javafx.fxml.FXML;
+import softwaredesign.Game;
+import softwaredesign.view.ViewFactory;
 
-public class StartWindowController {
+import java.net.URL;
+import java.util.ResourceBundle;
 
+public class StartWindowController extends WindowControler{
+    public StartWindowController(Game game, ViewFactory viewFactory, String fxmlName) {
+        super(game, viewFactory, fxmlName);
+    }
+
+    @FXML
+    void playButtonAction() {
+
+    }
+    @Override
+    public void initialize(URL location, ResourceBundle resources) {
+
+    }
 }
