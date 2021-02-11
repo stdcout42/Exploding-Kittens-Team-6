@@ -23,7 +23,7 @@
                               <Font name="Cantarell Extra Bold" size="16.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="optionsbutton" prefHeight="36.0" prefWidth="208.0" text="Options" textFill="WHITE">
+                        <JFXButton id="optionsbutton" onAction="#optionsButtonAction" prefHeight="36.0" prefWidth="208.0" text="Options" textFill="WHITE">
                            <VBox.margin>
                               <Insets top="10.0" />
                            </VBox.margin>

@@ -14,8 +14,15 @@ public class StartWindowController extends WindowControler{
 
     @FXML
     void playButtonAction() {
-
+        // TODO
     }
+
+    @FXML
+    void optionsButtonAction() {
+        // TODO
+    }
+
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
 
