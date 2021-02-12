@@ -15,3 +15,11 @@ U
 %src/main/java/softwaredesign/App.java,7/9/79027835075645f2375fcf557e883705caac8199
 l
 <src/main/java/softwaredesign/controller/SceneController.java,5/c/5c030f4e4b1ba919316af78a26afd4c7e0f0fa7f
+b
+2src/main/java/softwaredesign/view/ViewFactory.java,a/2/a2089ef78e8a68b2e4c0ef830f6049b673b5415c
+^
+.src/main/java/softwaredesign/model/Player.java,f/0/f07407d544ad91855ea9a353e8ca58cabb6c224a
+V
+&src/main/java/softwaredesign/Game.java,e/4/e42f2a60f6ddd4b8ec24a21cf5802a6780931035
+l
+<src/main/java/softwaredesign/controller/WindowControler.java,4/7/4757c847d9f4cff225d587afa2ad1ea9d1c7d56c
