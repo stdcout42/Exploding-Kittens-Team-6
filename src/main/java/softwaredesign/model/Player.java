@@ -1,4 +1,11 @@
 package softwaredesign.model;
 
-public class Player {
+/**
+ * Abstract player class,
+ * potential subclasses:
+ *   - HumanPlayer
+ *   - Bot player
+ *  Should contain: list of cards, ...
+ */
+public abstract class Player {
 }
