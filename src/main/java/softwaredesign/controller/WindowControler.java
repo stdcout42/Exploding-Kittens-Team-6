@@ -4,7 +4,9 @@ import javafx.fxml.Initializable;
 import softwaredesign.Game;
 import softwaredesign.view.ViewFactory;
 
-
+/**
+ * Subclasses of WindowController control the respective windows 
+ */
 public abstract class WindowControler implements Initializable {
     private Game game;
     private ViewFactory viewFactory;

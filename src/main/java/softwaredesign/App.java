@@ -9,6 +9,9 @@ import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import softwaredesign.view.ViewFactory;
 
+/**
+ * JavaFX launcher
+ */
 public class App extends Application {
 
     private double offsetX = 0;

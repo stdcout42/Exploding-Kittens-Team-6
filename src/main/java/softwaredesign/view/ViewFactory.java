@@ -13,9 +13,11 @@ import softwaredesign.controller.WindowControler;
 import java.io.IOException;
 import java.util.ArrayList;
 
+/**
+ * ViewFactory will produce views/windows when called from a controller or initially from App
+ */
 public class ViewFactory {
     private final String startWindowFxmlPath = "/fxml/StartWindow.fxml";
-    private final String styleCssPath = "/windowcss/style.css";
 
     private Game game;
     private ArrayList<Stage> activeStages;
