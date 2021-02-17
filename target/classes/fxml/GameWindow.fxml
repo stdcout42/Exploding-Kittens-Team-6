@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
-
+<?import javafx.scene.layout.HBox?>
 
 <AnchorPane prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: transparent;" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane prefHeight="900.0" prefWidth="1300.0" style="-fx-background-color: transparent;" AnchorPane.bottomAnchor="30.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="30.0">
          <children>
-            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right top, #bd3b24, #af3222, #a0281f, #921f1c, #841619);" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0" />
+            <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right top, #bd3b24, #af3222, #a0281f, #921f1c, #841619); -fx-background-radius: 10;" stylesheets="@../windowcss/style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
+               <children>
+                  <HBox fx:id="playerCardHBox" alignment="CENTER" layoutX="510.0" layoutY="650.0" prefHeight="135.0" prefWidth="1200.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="10.0" />
+                  <TextArea fx:id="logTextArea" layoutX="977.0" layoutY="224.0" prefHeight="321.0" prefWidth="230.0" style="-fx-background-radius: 25;" wrapText="true" AnchorPane.bottomAnchor="275.0" AnchorPane.leftAnchor="977.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="224.0" />
+                  <HBox fx:id="botHBox" layoutX="510.0" layoutY="57.0" prefHeight="149.0" prefWidth="1200.0" AnchorPane.bottomAnchor="651.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0" />
+                  <HBox fx:id="deckHBox" layoutX="330.0" layoutY="321.0" prefHeight="208.0" prefWidth="317.0" />
+               </children>
+            </AnchorPane>
          </children>
       </AnchorPane>
    </children>
