@@ -8,8 +8,8 @@ import softwaredesign.view.ViewFactory;
  * Subclasses of WindowController control the respective windows 
  */
 public abstract class WindowControler implements Initializable {
-    private Game game;
-    private ViewFactory viewFactory;
+    protected Game game;
+    protected ViewFactory viewFactory;
     private String fxmlName;
 
     public WindowControler(Game game, ViewFactory viewFactory, String fxmlName) {

@@ -7,6 +7,7 @@ import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
 import softwaredesign.Game;
+import softwaredesign.controller.GameWindowController;
 import softwaredesign.controller.StartWindowController;
 import softwaredesign.controller.WindowControler;
 
@@ -18,6 +19,7 @@ import java.util.ArrayList;
  */
 public class ViewFactory {
     private final String startWindowFxmlPath = "/fxml/StartWindow.fxml";
+    private final String gameWindowFxmlPath = "/fxml/GameWindow.fxml";
 
     private Game game;
 
@@ -48,5 +50,10 @@ public class ViewFactory {
         scene.setFill(Color.TRANSPARENT);
         stage.show();
     }
-    
+
+    public void showGameWindow() {
+        WindowControler gameWindowContoller = new GameWindowController(game, this,
+                gameWindowFxmlPath);
+        initializeStage(gameWindowContoller);
+    }
 }
