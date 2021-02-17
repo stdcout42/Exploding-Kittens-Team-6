@@ -20,11 +20,9 @@ public class ViewFactory {
     private final String startWindowFxmlPath = "/fxml/StartWindow.fxml";
 
     private Game game;
-    private ArrayList<Stage> activeStages;
 
     public ViewFactory(Game game) {
         this.game = game;
-        this.activeStages = new ArrayList<Stage>();
     }
 
     public void showStartWindow() {
@@ -49,15 +47,6 @@ public class ViewFactory {
         stage.setScene(scene);
         scene.setFill(Color.TRANSPARENT);
         stage.show();
-        activeStages.add(stage);
     }
-
-//    public void updateStyles() {
-//        for (Stage stage: activeStages
-//        ) {
-//            Scene scene = stage.getScene();
-//            scene.getStylesheets().clear();
-//            scene.getStylesheets().add(getClass().getResource(styleCssPath).toExternalForm());
-//        }
-//    }
+    
 }
