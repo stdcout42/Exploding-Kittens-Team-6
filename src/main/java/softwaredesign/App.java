@@ -18,7 +18,6 @@ public class App extends Application {
     public void start(Stage stage) throws Exception {
         ViewFactory viewFactory = new ViewFactory(new Game());
         viewFactory.showStartWindow();
-
     }
 
     public static void main(String[] args) {

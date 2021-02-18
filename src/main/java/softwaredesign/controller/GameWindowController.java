@@ -1,6 +1,8 @@
 package softwaredesign.controller;
 
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import softwaredesign.Game;
@@ -8,6 +10,7 @@ import softwaredesign.model.Card;
 import softwaredesign.view.ViewFactory;
 
 import java.net.URL;
+import java.util.ArrayList;
 import java.util.ResourceBundle;
 
 public class GameWindowController extends WindowControler{
@@ -29,6 +32,8 @@ public class GameWindowController extends WindowControler{
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-        deckHBox.getChildren().add(new Card(Card.CardType.DEFUSE));
+        //TODO: Game.dealCards(deckHBox)
     }
+
+
 }
