@@ -6,11 +6,13 @@ import javafx.scene.Node;
 public class HumanPlayer extends Player{
     private ObservableList<Node> cardList;
 
-    public boolean addCard(Card card) {
-        return this.cardList.add(card);
+    public void addCard(Card card)
+    {
+        this.cardList.add(card);
     }
 
-    public boolean removeCard(Card card) {
-        return this.cardList.remove(card);
+    public void removeCard(Card card)
+    {
+        this.cardList.remove(card);
     }
 }

@@ -11,6 +11,6 @@ package softwaredesign.model;
 abstract class Player {
     private int playerNumber;
 
-    public abstract boolean addCard(Card card);
-    public abstract boolean removeCard(Card card);
+    public abstract void addCard(Card card);
+    public abstract void removeCard(Card card);
 }
