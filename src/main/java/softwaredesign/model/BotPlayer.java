@@ -5,9 +5,9 @@ import java.util.ArrayList;
 public class BotPlayer extends Player{
     private ArrayList<Card> cardList = null;
 
-    public BotPlayer(ArrayList list)
+    public BotPlayer()
     {
-        cardList= list;
+        cardList = new ArrayList<>();
     }
 
     public void addCard(Card card)
