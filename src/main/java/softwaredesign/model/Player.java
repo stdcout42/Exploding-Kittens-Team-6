@@ -7,5 +7,10 @@ package softwaredesign.model;
  *   - Bot player
  *  Should contain: list of cards, ...
  */
-public abstract class Player {
+
+abstract class Player {
+    private int playerNumber;
+
+    public abstract boolean addCard(Card card);
+    public abstract boolean removeCard(Card card);
 }
