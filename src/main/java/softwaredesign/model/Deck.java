@@ -6,14 +6,22 @@ import java.util.List;
 
 
 public class Deck {
-    List<Card> DeckPile = new ArrayList<Card>(35);
+    private List<Card> DeckPile = new ArrayList<Card>();
     public Card drawCard(){
-        return DeckPile.get(0);
+        return DeckPile.remove(0);
     }
-    public Card seeCard(int index){
-        return DeckPile.get(index);
+    public ArrayList<Card> seeTopThreeCards(){
+        ArrayList<Card> topThreeCards = new ArrayList<Card>();
+        topThreeCards.add(DeckPile.get(0));
+        topThreeCards.add(DeckPile.get(1));
+        topThreeCards.add(DeckPile.get(2));
+        return topThreeCards;
     }
-    public void placeCard(int index, Card card) {
+
+    public void addToDeck(Card card){
+        DeckPile.add(card);
+    }
+    public void placeCardAtIndex(int index, Card card) {
         DeckPile.add(index,card);
     }
     public void shuffleDeck() {
