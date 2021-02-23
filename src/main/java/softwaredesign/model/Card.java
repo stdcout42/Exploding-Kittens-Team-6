@@ -8,7 +8,28 @@ import javafx.scene.text.Text;
 
 public class Card extends Parent {
     public enum CardType {
-        DEFUSE, SKIP, SEE_THE_FUTURE, EXPLODING_KITTEN, REVERSE, SHUFFLE, STEAL;
+        SKIP, SEE_THE_FUTURE, REVERSE, SHUFFLE, STEAL, DEFUSE, EXPLODING_KITTEN;
+
+        public static int getNumOfCards(CardType cardType){
+            switch (cardType) {
+                case SKIP:
+                    return 4;
+                case SEE_THE_FUTURE:
+                    return 5;
+                case REVERSE:
+                    return 4;
+                case SHUFFLE:
+                    return 6;
+                case STEAL:
+                    return 6;
+                case DEFUSE:
+                    return 6;
+                case EXPLODING_KITTEN:
+                    return 4;
+                default:
+                    throw new IllegalStateException("Unexpected value: " + cardType);
+            }
+        }
     }
 
     public Rectangle getCardRectangle() {
