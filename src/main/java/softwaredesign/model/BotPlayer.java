@@ -3,13 +3,20 @@ package softwaredesign.model;
 import java.util.ArrayList;
 
 public class BotPlayer extends Player{
-    private ArrayList<Card> cardList;
+    private ArrayList<Card> cardList = null;
 
-    public boolean addCard(Card card) {
-        return this.cardList.add(card);
+    public BotPlayer(ArrayList list)
+    {
+        cardList= list;
     }
 
-    public boolean removeCard(Card card) {
-        return this.cardList.remove(card);
+    public void addCard(Card card)
+    {
+       this.cardList.add(card);
+    }
+
+    public void removeCard(Card card)
+    {
+        this.cardList.remove(card);
     }
 }
