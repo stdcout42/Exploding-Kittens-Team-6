@@ -1,6 +1,7 @@
 package softwaredesign.model;
 
 import javafx.scene.Parent;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Rectangle;
@@ -45,7 +46,6 @@ public class Card extends Parent {
         cardRectangle.setArcWidth(20);
         cardRectangle.setArcHeight(20);
         cardRectangle.setFill(Color.ALICEBLUE);
-
 
         Text text = new Text(toString());
         text.setWrappingWidth(70);

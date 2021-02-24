@@ -1,4 +1,6 @@
 package softwaredesign;
+import javafx.collections.ObservableList;
+import javafx.scene.Node;
 import softwaredesign.model.*;
 
 import java.util.ArrayList;
@@ -15,9 +17,12 @@ public class Game{
     private int numberOfPlayers = 5;
     private Deck mainDeckOfCards;
     private HumanPlayer humanPlayer;
-    private BotPlayer botPlayer;
     private ArrayList <BotPlayer> botPlayerArray = new ArrayList<BotPlayer>();
+    private int turnNumber;
 
+    public int getTurnNumber() {
+        return turnNumber;
+    }
 
     public void setNumberOfPlayers(int numberOfPlayers) {
         if(numberOfPlayers > 1 && numberOfPlayers < 6)
@@ -28,14 +33,15 @@ public class Game{
         return numberOfPlayers;
     }
 
-    public void setupPlayers () {
-        humanPlayer = new HumanPlayer();
-        for (int i = 0; i < getNumberOfPlayers() -1; i++) {
-            botPlayerArray.add(new BotPlayer());
+    private void setupPlayers (ObservableList<Node> humanObservableCardList) {
+        int playerNumber = 1;
+        humanPlayer = new HumanPlayer(playerNumber++, humanObservableCardList);
+        for (int i = 0; i < numberOfPlayers - 1; i++) {
+            botPlayerArray.add(new BotPlayer(playerNumber++));
         }
     }
 
-    public void dealCards(){
+    private void dealCards(){
         int numberOfCardsInHand = 5;
 
         humanPlayer.addCard(new Card(Card.CardType.DEFUSE));
@@ -51,14 +57,16 @@ public class Game{
         }
     }
 
-    public void setupGame(){
+    public void setupGame(ObservableList<Node> observableHumanPlayerList){
         mainDeckOfCards = new Deck();
+        turnNumber = 1;
         for (int i = 0; i < Card.CardType.values().length -2; i++) { // length -2 as defuse and exploding kittens are the last two cards in the Cardtype enum.
             for (int j = 0; j < Card.CardType.getNumOfCards(Card.CardType.values()[i]); j++) {
                 mainDeckOfCards.addToDeck(new Card(Card.CardType.values()[i]));
             }
         }
         mainDeckOfCards.shuffleDeck();
+        setupPlayers(observableHumanPlayerList);
         dealCards();
         for (int i = 0; i < Card.CardType.getNumOfCards(Card.CardType.DEFUSE) - numberOfPlayers; i++) {
             mainDeckOfCards.addToDeck(new Card(Card.CardType.DEFUSE));
@@ -66,5 +74,24 @@ public class Game{
         for (int i = 0; i < numberOfPlayers - 1; i++) {
             mainDeckOfCards.addToDeck(new Card(Card.CardType.EXPLODING_KITTEN));
         }
+    }
+
+    public Card playerDraws() {
+        Player player = getPlayerThatHasTurn();
+        Card drawnCard = mainDeckOfCards.drawCard();
+        if(drawnCard.cardType == Card.CardType.EXPLODING_KITTEN) {
+            // TODO
+        }
+        else {
+            player.addCard(drawnCard);
+        }
+        return drawnCard;
+    }
+
+    private Player getPlayerThatHasTurn() {
+        for (Player player: botPlayerArray) {
+            if (player.getPlayerNumber() == getTurnNumber()) return player;
+        }
+        return humanPlayer;
     }
 }
