@@ -33,10 +33,6 @@ public class Card extends Parent {
         }
     }
 
-    public Rectangle getCardRectangle() {
-        return cardRectangle;
-    }
-
     private Rectangle cardRectangle;
     public final CardType cardType;
     public Card(CardType cardType) {

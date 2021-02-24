@@ -14,15 +14,20 @@
                <children>
                   <HBox fx:id="playerCardHBox" alignment="CENTER" layoutX="10.0" layoutY="576.0" prefHeight="135.0" prefWidth="1200.0" spacing="2.0" AnchorPane.bottomAnchor="109.0" AnchorPane.rightAnchor="10.0" />
                   <TextArea fx:id="logTextArea" layoutX="976.0" layoutY="197.0" prefHeight="321.0" prefWidth="230.0" style="-fx-background-radius: 25;" wrapText="true" AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="976.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="197.0" />
-                  <HBox fx:id="botHBox" layoutX="510.0" layoutY="57.0" prefHeight="149.0" prefWidth="1200.0" spacing="10.0" AnchorPane.bottomAnchor="651.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0" />
-                  <HBox fx:id="deckHBox" layoutX="330.0" layoutY="321.0" prefHeight="208.0" prefWidth="317.0" />
+                  <HBox fx:id="botHBox" alignment="CENTER" layoutX="510.0" layoutY="57.0" prefHeight="149.0" prefWidth="1200.0" spacing="10.0" AnchorPane.bottomAnchor="651.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0" />
+                  <HBox fx:id="playedCardsHBox" layoutX="330.0" layoutY="321.0" prefHeight="208.0" prefWidth="317.0" />
                   <HBox layoutX="486.0" layoutY="733.0" prefHeight="73.0" prefWidth="248.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="486.0" AnchorPane.rightAnchor="486.0" AnchorPane.topAnchor="733.0">
                      <children>
                         <JFXButton fx:id="drawButton" alignment="CENTER" onAction="#drawButtonAction" text="Draw a card" />
                         <JFXButton fx:id="playCardButton" onAction="#playCardButtonAction" text="Play selected Card" />
                      </children>
                   </HBox>
-                  <Label fx:id="cardSelectLabel" alignment="CENTER" layoutX="513.0" layoutY="549.0" prefHeight="16.0" prefWidth="195.0" text="No cards selected" />
+                  <AnchorPane layoutX="463.0" layoutY="550.0" AnchorPane.bottomAnchor="244.0" AnchorPane.leftAnchor="463.0" AnchorPane.rightAnchor="462.0" AnchorPane.topAnchor="550.0">
+                     <children>
+                        <Label fx:id="cardSelectLabel" alignment="CENTER" layoutX="10.0" layoutY="10.0" prefHeight="26.0" prefWidth="295.0" text="No card selected" />
+                     </children>
+                  </AnchorPane>
+                  <Label fx:id="playerSelectLabel" alignment="CENTER" layoutX="472.0" layoutY="193.0" prefHeight="26.0" prefWidth="295.0" text="No player selected" />
                </children>
             </AnchorPane>
          </children>
