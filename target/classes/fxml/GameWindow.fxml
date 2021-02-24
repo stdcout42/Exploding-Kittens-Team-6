@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXButton?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -10,10 +12,17 @@
          <children>
             <AnchorPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: linear-gradient(to right top, #bd3b24, #af3222, #a0281f, #921f1c, #841619); -fx-background-radius: 10;" stylesheets="@../windowcss/style.css" AnchorPane.bottomAnchor="10.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="10.0">
                <children>
-                  <HBox fx:id="playerCardHBox" alignment="CENTER" layoutX="510.0" layoutY="650.0" prefHeight="135.0" prefWidth="1200.0" AnchorPane.bottomAnchor="70.0" AnchorPane.rightAnchor="10.0" />
-                  <TextArea fx:id="logTextArea" layoutX="977.0" layoutY="224.0" prefHeight="321.0" prefWidth="230.0" style="-fx-background-radius: 25;" wrapText="true" AnchorPane.bottomAnchor="275.0" AnchorPane.leftAnchor="977.0" AnchorPane.rightAnchor="13.0" AnchorPane.topAnchor="224.0" />
-                  <HBox fx:id="botHBox" layoutX="510.0" layoutY="57.0" prefHeight="149.0" prefWidth="1200.0" AnchorPane.bottomAnchor="651.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0" />
+                  <HBox fx:id="playerCardHBox" alignment="CENTER" layoutX="10.0" layoutY="576.0" prefHeight="135.0" prefWidth="1200.0" spacing="2.0" AnchorPane.bottomAnchor="109.0" AnchorPane.rightAnchor="10.0" />
+                  <TextArea fx:id="logTextArea" layoutX="976.0" layoutY="197.0" prefHeight="321.0" prefWidth="230.0" style="-fx-background-radius: 25;" wrapText="true" AnchorPane.bottomAnchor="302.0" AnchorPane.leftAnchor="976.0" AnchorPane.rightAnchor="14.0" AnchorPane.topAnchor="197.0" />
+                  <HBox fx:id="botHBox" layoutX="510.0" layoutY="57.0" prefHeight="149.0" prefWidth="1200.0" spacing="10.0" AnchorPane.bottomAnchor="651.0" AnchorPane.leftAnchor="10.0" AnchorPane.rightAnchor="10.0" AnchorPane.topAnchor="20.0" />
                   <HBox fx:id="deckHBox" layoutX="330.0" layoutY="321.0" prefHeight="208.0" prefWidth="317.0" />
+                  <HBox layoutX="486.0" layoutY="733.0" prefHeight="73.0" prefWidth="248.0" AnchorPane.bottomAnchor="14.0" AnchorPane.leftAnchor="486.0" AnchorPane.rightAnchor="486.0" AnchorPane.topAnchor="733.0">
+                     <children>
+                        <JFXButton fx:id="drawButton" alignment="CENTER" onAction="#drawButtonAction" text="Draw a card" />
+                        <JFXButton fx:id="playCardButton" onAction="#playCardButtonAction" text="Play selected Card" />
+                     </children>
+                  </HBox>
+                  <Label fx:id="cardSelectLabel" alignment="CENTER" layoutX="513.0" layoutY="549.0" prefHeight="16.0" prefWidth="195.0" text="No cards selected" />
                </children>
             </AnchorPane>
          </children>

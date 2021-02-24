@@ -8,9 +8,18 @@ package softwaredesign.model;
  *  Should contain: list of cards, ...
  */
 
-abstract class Player {
+public abstract class Player {
+
     private int playerNumber;
+
+    public Player(int playerNumber) {
+        this.playerNumber = playerNumber;
+    }
 
     public abstract void addCard(Card card);
     public abstract void removeCard(Card card);
+    public int getPlayerNumber() {
+        return playerNumber;
+    }
+
 }
