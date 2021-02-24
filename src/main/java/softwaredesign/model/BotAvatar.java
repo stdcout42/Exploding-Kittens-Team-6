@@ -1,4 +1,4 @@
-package softwaredesign.view;
+package softwaredesign.model;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
