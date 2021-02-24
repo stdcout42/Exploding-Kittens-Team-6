@@ -7,7 +7,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import softwaredesign.Game;
 import softwaredesign.model.Card;
-import softwaredesign.view.BotAvatar;
+import softwaredesign.model.BotAvatar;
 import softwaredesign.view.ViewFactory;
 
 import java.net.URL;
@@ -72,8 +72,8 @@ public class GameWindowController extends WindowControler{
     @FXML
     void drawButtonAction() {
         Card drawnCard;
-        if(game.getTurnNumber() == 1) {
-            drawnCard = game.playerDraws();
+        if(game.getTurnNumber() == 0) {
+            drawnCard = game.currentPlayerDraws();
             appendToLog("You drew a " + drawnCard.toString() + " card");
             if(drawnCard.cardType == Card.CardType.EXPLODING_KITTEN) {
                 //TODO
