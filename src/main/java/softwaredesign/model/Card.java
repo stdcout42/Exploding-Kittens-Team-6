@@ -14,11 +14,11 @@ public class Card extends Parent {
         public static int getNumOfCards(CardType cardType){
             switch (cardType) {
                 case SKIP:
-                    return 4;
+                    return 6;
                 case SEE_THE_FUTURE:
-                    return 5;
+                    return 6;
                 case REVERSE:
-                    return 4;
+                    return 6;
                 case SHUFFLE:
                     return 6;
                 case STEAL:

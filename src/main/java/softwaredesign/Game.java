@@ -1,9 +1,10 @@
 package softwaredesign;
-import javafx.collections.ObservableList;
-import javafx.scene.Node;
+import javafx.application.Platform;
+import softwaredesign.controller.GameWindowController;
 import softwaredesign.model.*;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 /**
  * Game class will contain:
@@ -17,8 +18,9 @@ public class Game{
     private int numberOfPlayers = 5;
     private Deck mainDeckOfCards;
     private HumanPlayer humanPlayer;
-    private ArrayList <BotPlayer> botPlayerArray = new ArrayList<BotPlayer>();
+    private ArrayList <Player> playersArrayList;
     private int turnNumber;
+    private GameWindowController gameWindowController;
 
     public int getTurnNumber() {
         return turnNumber;
@@ -33,53 +35,44 @@ public class Game{
         return numberOfPlayers;
     }
 
-    private void setupPlayers (ObservableList<Node> humanObservableCardList) {
+    private void setupPlayers() {
         int playerNumber = 0;
-        humanPlayer = new HumanPlayer(playerNumber++, humanObservableCardList);
-        for (int i = 0; i < numberOfPlayers - 1; i++) {
-            botPlayerArray.add(new BotPlayer(playerNumber++));
+        humanPlayer = new HumanPlayer(playerNumber++, gameWindowController.getPlayerCardHBox().getChildren());
+        playersArrayList = new ArrayList<>();
+        playersArrayList.add(humanPlayer);
+        for (int i = 0; i < numberOfPlayers; i++) {
+            BotPlayer botPlayer = new BotPlayer(playerNumber++);
+            playersArrayList.add(botPlayer);
+            gameWindowController.getBotHBox().getChildren().add(botPlayer.getBotAvatar());
         }
     }
 
     private void dealCards(){
         int numberOfCardsInHand = 5;
 
-        humanPlayer.addCard(new Card(Card.CardType.DEFUSE));
-        for (int i = 0; i < numberOfPlayers - 1; i++) {
-            botPlayerArray.get(i).addCard(new Card(Card.CardType.DEFUSE));
-        }
-
-        for (int i = 0; i < numberOfCardsInHand - 1; i++) {
-            humanPlayer.addCard(mainDeckOfCards.drawCard());
-            for (int j = 0; j < numberOfPlayers - 1; j++) {
-                botPlayerArray.get(j).addCard(mainDeckOfCards.drawCard());
+        for (Player player: playersArrayList) {
+            player.addCard(new Card(Card.CardType.DEFUSE));
+            for (int i = 0; i < numberOfCardsInHand - 1; i++) {
+                player.addCard(mainDeckOfCards.drawCard());
             }
         }
     }
 
-    public void setupGame(ObservableList<Node> observableHumanPlayerList){
+    public void setupGame(GameWindowController controller){
+        this.gameWindowController = controller;
         mainDeckOfCards = new Deck();
         turnNumber = 0;
-        for (int i = 0; i < Card.CardType.values().length -2; i++) { // length -2 as defuse and exploding kittens are the last two cards in the Cardtype enum.
-            for (int j = 0; j < Card.CardType.getNumOfCards(Card.CardType.values()[i]); j++) {
-                mainDeckOfCards.addToDeck(new Card(Card.CardType.values()[i]));
-            }
-        }
-        mainDeckOfCards.shuffleDeck();
-        setupPlayers(observableHumanPlayerList);
+        setupPlayers();
         dealCards();
-        for (int i = 0; i < Card.CardType.getNumOfCards(Card.CardType.DEFUSE) - numberOfPlayers; i++) {
-            mainDeckOfCards.addToDeck(new Card(Card.CardType.DEFUSE));
-        }
-        for (int i = 0; i < numberOfPlayers - 1; i++) {
-            mainDeckOfCards.addToDeck(new Card(Card.CardType.EXPLODING_KITTEN));
-        }
+        mainDeckOfCards.addPostPlayerSetupCards(numberOfPlayers);
     }
 
-    public Card currentPlayerDraws() {
+    public void currentPlayerDraws() {
         Player player = getPlayerThatHasTurn();
+        if(player.getPlayerNumber() != turnNumber) return;
         Card drawnCard = mainDeckOfCards.drawCard();
         if(drawnCard.cardType == Card.CardType.EXPLODING_KITTEN) {
+            System.out.println("Explotin' kittan drawn!");
             // TODO
         }
         else {
@@ -87,56 +80,52 @@ public class Game{
             player.addCard(drawnCard);
         }
         startNextTurn();
-        return drawnCard;
     }
 
     private void startNextTurn() {
         turnNumber = (turnNumber + 1) % numberOfPlayers;
         System.out.println("Turn number: " + turnNumber);
         Player player = getPlayerThatHasTurn();
-        System.out.println(player.toString());
         if(player instanceof BotPlayer) {
-            System.out.println("The bots move now");
-            makeRandomBotMove();
+            System.out.println(player.toString() + "'s turn!");
+            makeRandomBotMove((BotPlayer) player);
         }
     }
 
-    private void makeRandomBotMove() {
-//        int moveType = new Random().nextInt(2);
-//        if(moveType == 0) {
-//            // draw
-//            try {
-//                Thread.sleep(1000);
-//            } catch (InterruptedException e) {
-//                e.printStackTrace();
-//            }
-//            playerDraws();
-//        } else {
-//            // play
+    private void makeRandomBotMove(BotPlayer botPlayer) {
+            int moveType = new Random().nextInt(2);
+            if(moveType == 0) {
+                currentPlayerDraws();
+            }
+            else {
+                makeBotPlayCard(botPlayer);
+            }
+    }
 
-//        }
+    private void makeBotPlayCard(BotPlayer botPlayer) {
+        Card cardToPlay = botPlayer.getNonDefuseCard();
+        currentPlayerPlays(cardToPlay);
+    }
 
-            Thread thread = new Thread() {
-                public void run() {
-                    try {
-                        Thread.sleep(1000);
-                    } catch (InterruptedException e) {
-                        e.printStackTrace();
-                    }
+    private void currentPlayerPlays(Card cardToPlay) {
+        Player player = getPlayerThatHasTurn();
+        if(player.getPlayerNumber() != turnNumber) return;
+        player.removeCard(cardToPlay);
+        System.out.println(player.toString() + " plays " + cardToPlay.toString());
+        gameWindowController.getPlayedCardsHBox().getChildren().clear();
+        gameWindowController.getPlayedCardsHBox().getChildren().add(cardToPlay);
 
-                    currentPlayerDraws();
-                }
-            };
-            thread.start();
-
+        if(player instanceof BotPlayer) {
+            makeRandomBotMove((BotPlayer) player);
+        }
     }
 
     private Player getPlayerThatHasTurn() {
-        for (Player player: botPlayerArray) {
+        for (Player player: playersArrayList) {
             if (player.getPlayerNumber() == turnNumber) {
                 return player;
             }
         }
-        return humanPlayer;
+        return null;
     }
 }
