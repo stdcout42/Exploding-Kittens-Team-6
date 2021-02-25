@@ -1,21 +1,33 @@
 package softwaredesign.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 
 public class Deck {
-    private List<Card> deckPile = new ArrayList<Card>();
+    private List<Card> deckPile;
+
+    public Deck() {
+        deckPile = new ArrayList<>();
+        addPrePlayerSetupCards();
+        shuffleDeck();
+    }
+
+    private void addPrePlayerSetupCards() {
+        for (int i = 0; i < Card.CardType.values().length -2; i++) { // length -2 as defuse and exploding kittens are the last two cards in the Cardtype enum.
+            for (int j = 0; j < Card.CardType.getNumOfCards(Card.CardType.values()[i]); j++) {
+                deckPile.add(new Card(Card.CardType.values()[i]));
+            }
+        }
+    }
+
     public Card drawCard(){
         return deckPile.remove(0);
     }
-    public ArrayList<Card> seeTopThreeCards(){
-        ArrayList<Card> topThreeCards = new ArrayList<Card>();
-        topThreeCards.add(deckPile.get(0));
-        topThreeCards.add(deckPile.get(1));
-        topThreeCards.add(deckPile.get(2));
-        return topThreeCards;
+    public List<Card> seeTopThreeCards(){
+        return new ArrayList<>(Arrays.asList(deckPile.get(0), deckPile.get(1), deckPile.get(2)));
     }
 
     public void addToDeck(Card card){
@@ -26,5 +38,14 @@ public class Deck {
     }
     public void shuffleDeck() {
         Collections.shuffle(deckPile);
+    }
+
+    public void addPostPlayerSetupCards(int numberOfPlayers) {
+        for (int i = 0; i < Card.CardType.getNumOfCards(Card.CardType.DEFUSE) - numberOfPlayers; i++) {
+            deckPile.add(new Card(Card.CardType.DEFUSE));
+        }
+        for (int i = 0; i < numberOfPlayers - 1; i++) {
+            deckPile.add(new Card(Card.CardType.EXPLODING_KITTEN));
+        }
     }
 }
