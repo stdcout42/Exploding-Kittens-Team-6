@@ -20,4 +20,12 @@ public class HumanPlayer extends Player{
     {
         this.cardList.remove(card);
     }
+
+    @Override
+    public boolean hasDefuseCard() {
+        for(Node cardNode : cardList) {
+            if(((Card) cardNode).cardType == Card.CardType.DEFUSE) return true;
+        }
+        return false;
+    }
 }

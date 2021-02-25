@@ -22,4 +22,11 @@ public abstract class Player {
         return playerNumber;
     }
 
+    public abstract boolean hasDefuseCard();
+
+    @Override
+    public String toString() {
+        return "Player " + playerNumber;
+    }
+
 }

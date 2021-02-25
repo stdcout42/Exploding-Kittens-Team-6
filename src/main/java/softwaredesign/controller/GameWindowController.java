@@ -6,6 +6,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import softwaredesign.Game;
+import softwaredesign.model.Card;
 import softwaredesign.view.ViewFactory;
 
 import java.net.URL;
@@ -69,13 +70,14 @@ public class GameWindowController extends WindowControler{
     private void initLogTextArea() {
         logTextArea.setEditable(false);
         logTextArea.appendText("A new game has been started!\n");
-        logTextArea.appendText("It's player " + game.getTurnNumber() + "'s turn!\n");
+        logTextArea.appendText("It's your turn!\n");
     }
 
     public void updateHumanCardListClickListeners() {
         for (Node card : playerCardHBox.getChildren()) {
             card.setOnMouseClicked(mouseEvent -> {
                 cardSelectLabel.setText(card.toString() + " card selected");
+                game.setCardNodeSelected(card);
             });
         }
     }
@@ -87,7 +89,7 @@ public class GameWindowController extends WindowControler{
 
     @FXML
     void playCardButtonAction() {
-
+        game.currentPlayerPlays(null);
     }
 
     public void appendToLog(String text) {
@@ -95,4 +97,12 @@ public class GameWindowController extends WindowControler{
     }
 
 
+    public void resetcardSelectLabel() {
+        cardSelectLabel.setText("No cards selected.");
+    }
+
+    public void addCardToPlayedCards(Card cardToPlay) {
+        playedCardsHBox.getChildren().clear();
+        playedCardsHBox.getChildren().add(cardToPlay);
+    }
 }
