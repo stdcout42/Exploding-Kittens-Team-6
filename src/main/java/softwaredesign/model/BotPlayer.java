@@ -6,24 +6,28 @@ public class BotPlayer extends Player{
     private ArrayList<Card> cardList;
     private BotAvatar botAvatar;
 
-    public BotPlayer(int playerNumber)
-    {
+    public BotPlayer(int playerNumber) {
         super(playerNumber);
         cardList = new ArrayList<>();
         botAvatar = new BotAvatar(playerNumber);
     }
 
-    public void addCard(Card card)
-    {
+    public void addCard(Card card) {
        this.cardList.add(card);
        botAvatar.incNumOfCards();
     }
 
-    public void removeCard(Card card)
-    {
-
+    public void removeCard(Card card) {
         this.cardList.remove(card);
         botAvatar.decNumOfCards();
+    }
+
+    @Override
+    public boolean hasDefuseCard() {
+        for(Card card : cardList) {
+            if(card.cardType == Card.CardType.DEFUSE) return true;
+        }
+        return false;
     }
 
 

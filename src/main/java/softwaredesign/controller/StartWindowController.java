@@ -1,6 +1,8 @@
 package softwaredesign.controller;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
+import javafx.stage.Stage;
 import softwaredesign.Game;
 import softwaredesign.view.ViewFactory;
 
@@ -12,10 +14,14 @@ public class StartWindowController extends WindowControler{
         super(game, viewFactory, fxmlName);
     }
 
+    @FXML
+    private Label titleLabel;
 
     @FXML
     void playButtonAction() {
         viewFactory.showGameWindow();
+        Stage thisStage = (Stage) titleLabel.getScene().getWindow();
+        viewFactory.closeStage(thisStage);
     }
 
     @FXML

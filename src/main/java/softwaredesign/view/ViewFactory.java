@@ -56,4 +56,8 @@ public class ViewFactory {
                 gameWindowFxmlPath);
         initializeStage(gameWindowContoller);
     }
+
+    public void closeStage(Stage stage) {
+        stage.close();
+    }
 }
