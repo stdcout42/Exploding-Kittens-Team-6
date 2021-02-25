@@ -28,4 +28,18 @@ public class HumanPlayer extends Player{
         }
         return false;
     }
+
+    @Override
+    public Card extractDefuseCard() {
+        Card defuseCard = null;
+        for (Node nodeCard: cardList) {
+            Card card = (Card) nodeCard;
+            if (card.cardType == Card.CardType.DEFUSE) {
+                defuseCard = card;
+                cardList.remove(card);
+                break;
+            }
+        }
+        return defuseCard;
+    }
 }

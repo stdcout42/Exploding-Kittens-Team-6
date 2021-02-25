@@ -30,7 +30,6 @@ public class BotPlayer extends Player{
         return false;
     }
 
-
     public BotAvatar getBotAvatar() {
         return botAvatar;
     }
@@ -47,5 +46,16 @@ public class BotPlayer extends Player{
             if(card.cardType != Card.CardType.DEFUSE) return true;
         }
         return false;
+    }
+
+    public Card extractDefuseCard() {
+        Card defuseCard = null;
+        for (Card card: cardList)
+            if(card.cardType == Card.CardType.DEFUSE) {
+                defuseCard = card;
+                cardList.remove(card);
+                break;
+            }
+        return defuseCard;
     }
 }

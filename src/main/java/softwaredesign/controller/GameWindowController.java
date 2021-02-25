@@ -1,11 +1,13 @@
 package softwaredesign.controller;
 
+import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
 import softwaredesign.Game;
+import softwaredesign.model.BotAvatar;
 import softwaredesign.model.Card;
 import softwaredesign.view.ViewFactory;
 
@@ -27,6 +29,9 @@ public class GameWindowController extends WindowControler{
     @FXML
     private TextArea logTextArea;
 
+    @FXML
+    private JFXTextField kittenIndexTextField;
+
     public HBox getPlayedCardsHBox() {
         return playedCardsHBox;
     }
@@ -37,6 +42,12 @@ public class GameWindowController extends WindowControler{
     public HBox getBotHBox() {
         return botHBox;
     }
+
+    @FXML
+    void placeButtonAction() {
+
+    }
+
 
     @FXML
     private HBox botHBox;
@@ -50,10 +61,13 @@ public class GameWindowController extends WindowControler{
     @FXML
     private Label playerSelectLabel;
 
+    @FXML
+    private Label cardsInDeckLabel;
+
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         game.setupGame(this);
-
+        setNumCardsInDeckLabel(game.getNumCardsInDeck());
         updateBotAvatarListClickListeners();
         updateHumanCardListClickListeners();
         initLogTextArea();
@@ -84,18 +98,17 @@ public class GameWindowController extends WindowControler{
 
     @FXML
     void drawButtonAction() {
-        game.currentPlayerDraws();
+        game.playerDraws(true);
     }
 
     @FXML
-    void playCardButtonAction() {
-        game.currentPlayerPlays(null);
+    private void playCardButtonAction() {
+        game.playerPlaysCard(null);
     }
 
     public void appendToLog(String text) {
         logTextArea.appendText(text + "\n");
     }
-
 
     public void resetcardSelectLabel() {
         cardSelectLabel.setText("No cards selected.");
@@ -104,5 +117,13 @@ public class GameWindowController extends WindowControler{
     public void addCardToPlayedCards(Card cardToPlay) {
         playedCardsHBox.getChildren().clear();
         playedCardsHBox.getChildren().add(cardToPlay);
+    }
+
+    public void setNumCardsInDeckLabel(int number) {
+        cardsInDeckLabel.setText("Cards in deck: " + number);
+    }
+
+    public void removeBotAvatar(BotAvatar botAvatar) {
+        botHBox.getChildren().remove(botAvatar);
     }
 }
