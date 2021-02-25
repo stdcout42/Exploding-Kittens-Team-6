@@ -48,4 +48,8 @@ public class Deck {
             deckPile.add(new Card(Card.CardType.EXPLODING_KITTEN));
         }
     }
+
+    public int getNumOfCards() {
+        return deckPile.size();
+    }
 }

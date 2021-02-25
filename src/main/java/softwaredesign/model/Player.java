@@ -11,9 +11,11 @@ package softwaredesign.model;
 public abstract class Player {
 
     private int playerNumber;
+    private boolean hasExplodingKitten;
 
     public Player(int playerNumber) {
         this.playerNumber = playerNumber;
+        this.hasExplodingKitten = false;
     }
 
     public abstract void addCard(Card card);
@@ -29,4 +31,13 @@ public abstract class Player {
         return "Player " + playerNumber;
     }
 
+    public boolean isExploding() {
+        return hasExplodingKitten;
+    }
+
+    public void setHasExplodingKitten(boolean hasExplodingKitten) {
+        this.hasExplodingKitten = hasExplodingKitten;
+    }
+
+    public abstract Card extractDefuseCard();
 }
