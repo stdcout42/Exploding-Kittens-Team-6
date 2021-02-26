@@ -5,7 +5,6 @@ import softwaredesign.controller.GameWindowController;
 import softwaredesign.model.*;
 
 import java.util.ArrayList;
-import java.util.List;
 import java.util.Random;
 
 public class Game{
@@ -15,7 +14,6 @@ public class Game{
     private int turnNumber;
     private GameWindowController gameWindowController;
     private Node cardNodeSelected;
-    private Node botNodeSelected;
     private boolean reverse;
 
     public void humanPlacesKittenAt(int index) {
@@ -36,6 +34,8 @@ public class Game{
             BotPlayer botPlayer = getBotFromAvatar(botAvatar);
             stolenCard = botPlayer.extractRandomCard();
             player.addCard(stolenCard);
+            ((HumanPlayer) player).setIsStealing(false);
+            resetBotNodeSelected();
             gameWindowController.updateHumanCardListClickListeners();
             gameWindowController.appendToLog("How sneaky. You stole a " + stolenCard.toString() + " card!");
         }
@@ -64,7 +64,6 @@ public class Game{
         reverse = false;
         mainDeckOfCards = new Deck();
         cardNodeSelected = null;
-        botNodeSelected = null;
         turnNumber = 0;
         setupPlayers();
         dealCards();
@@ -121,15 +120,20 @@ public class Game{
             gameWindowController.appendToLog("It's not your turn yet!");
             return;
         }
-        if(playerThatHasTurn instanceof HumanPlayer) {
+
+        if(isHuman) {
             if(cardNodeSelected == null) {
                 gameWindowController.appendToLog("Please select a card to play!");
                 return;
             }
             card = getCardSelectedNodeAndResetNode();
+            if(playerThatHasTurn.isExploding() && card.cardType != Card.CardType.DEFUSE) {
+                gameWindowController.appendToLog("You can't play that, you're on fire!!");
+                return;
+            }
         }
         if(card.cardType == Card.CardType.DEFUSE)
-            playedPlaysDefuseCard(playerThatHasTurn, card);
+            playerPlaysDefuseCard(playerThatHasTurn, card);
         else {
             movePlayedCardToPlayedPile(card, playerThatHasTurn);
             logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, card);
@@ -137,7 +141,7 @@ public class Game{
         }
     }
 
-    private void playedPlaysDefuseCard(Player playerThatHasTurn, Card card) {
+    private void playerPlaysDefuseCard(Player playerThatHasTurn, Card card) {
         if(playerThatHasTurn instanceof HumanPlayer) {
             if(!playerThatHasTurn.isExploding()) {
                 gameWindowController.appendToLog("You can't play that card right now!");
@@ -169,9 +173,13 @@ public class Game{
     }
 
     private void placeKittenRandomlyInDeck() {
-        int index = new Random().nextInt(getNumCardsInDeck());
-        mainDeckOfCards.placeCardAtIndex(index, new Card(Card.CardType.EXPLODING_KITTEN));
-        gameWindowController.appendToLog("Exploding kitten has been placed back into the deck!");
+        int numCardsInDeck = getNumCardsInDeck();
+        if(numCardsInDeck == 0) mainDeckOfCards.addToDeck(new Card(Card.CardType.EXPLODING_KITTEN));
+        else {
+            int index = new Random().nextInt(numCardsInDeck);
+            mainDeckOfCards.placeCardAtIndex(index, new Card(Card.CardType.EXPLODING_KITTEN));
+            gameWindowController.appendToLog("Exploding kitten has been placed back into the deck!");
+        }
     }
 
     private void resetCardSelected() {
@@ -180,7 +188,6 @@ public class Game{
     }
 
     private void resetBotNodeSelected() {
-        botNodeSelected = null;
         gameWindowController.resetBotSelectLabel();
     }
 
@@ -224,7 +231,6 @@ public class Game{
             player.addCard(stolenCard);
         } else {
             gameWindowController.appendToLog("Select a player to steal a card from!");
-            botNodeSelected = null;
             ((HumanPlayer) player).setIsStealing(true);
         }
 
@@ -299,10 +305,6 @@ public class Game{
 
     public void setCardNodeSelected(Node cardNode) {
         this.cardNodeSelected = cardNode;
-    }
-
-    public void setBotNodeSelected(Node botNode) {
-        this.botNodeSelected = botNode;
     }
 
     private void logMoveByPlayer(Player player, MoveType moveType, Card card) {

@@ -71,7 +71,6 @@ public class GameWindowController extends WindowControler{
         for(Node botAvatar : botHBox.getChildren()) {
             botAvatar.setOnMouseClicked(mouseEvent -> {
                 playerSelectLabel.setText(botAvatar.toString() + " selected.");
-                game.setBotNodeSelected(botAvatar);
                 game.humanStealsFromBot(botAvatar);
             });
         }
@@ -129,8 +128,12 @@ public class GameWindowController extends WindowControler{
 
     @FXML
     void placeButtonAction() {
-        int index = Integer.parseInt(kittenIndexTextField.getText());
-        game.humanPlacesKittenAt(index);
+        try {
+            int index = Integer.parseInt(kittenIndexTextField.getText());
+            game.humanPlacesKittenAt(index);
+        } catch (NumberFormatException e) {
+            appendToLog("Indices are usually numeric...");
+        }
     }
 
 
