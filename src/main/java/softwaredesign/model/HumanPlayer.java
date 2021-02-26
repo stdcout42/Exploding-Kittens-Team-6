@@ -3,6 +3,7 @@ package softwaredesign.model;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
+import java.util.Collections;
 import java.util.Random;
 
 public class HumanPlayer extends Player{
