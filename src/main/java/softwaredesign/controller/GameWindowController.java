@@ -44,11 +44,6 @@ public class GameWindowController extends WindowControler{
     }
 
     @FXML
-    void placeButtonAction() {
-
-    }
-
-    @FXML
     private HBox botHBox;
 
     @FXML
@@ -96,7 +91,7 @@ public class GameWindowController extends WindowControler{
     }
 
     @FXML
-    void drawButtonAction() {
+    private void drawButtonAction() {
         game.playerDraws(true);
     }
 
@@ -124,5 +119,11 @@ public class GameWindowController extends WindowControler{
 
     public void removeBotAvatar(BotAvatar botAvatar) {
         botHBox.getChildren().remove(botAvatar);
+    }
+
+    @FXML
+    void placeButtonAction() {
+        int index = Integer.parseInt(kittenIndexTextField.getText());
+        game.humanPlacesKittenAt(index);
     }
 }
