@@ -1,6 +1,7 @@
 package softwaredesign.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class BotPlayer extends Player{
     private ArrayList<Card> cardList;
@@ -57,5 +58,16 @@ public class BotPlayer extends Player{
                 break;
             }
         return defuseCard;
+    }
+
+    @Override
+    public boolean hasCards() {
+        return !cardList.isEmpty();
+    }
+
+    @Override
+    public Card extractRandomCard() {
+        botAvatar.decNumOfCards();
+        return cardList.remove(new Random().nextInt(cardList.size()));
     }
 }

@@ -71,6 +71,8 @@ public class GameWindowController extends WindowControler{
         for(Node botAvatar : botHBox.getChildren()) {
             botAvatar.setOnMouseClicked(mouseEvent -> {
                 playerSelectLabel.setText(botAvatar.toString() + " selected.");
+                game.setBotNodeSelected(botAvatar);
+                game.humanStealsFromBot(botAvatar);
             });
         }
     }
@@ -117,6 +119,10 @@ public class GameWindowController extends WindowControler{
         cardsInDeckLabel.setText("Cards in deck: " + number);
     }
 
+    public void resetBotSelectLabel() {
+        playerSelectLabel.setText("No players selected.");
+    }
+
     public void removeBotAvatar(BotAvatar botAvatar) {
         botHBox.getChildren().remove(botAvatar);
     }
@@ -126,4 +132,6 @@ public class GameWindowController extends WindowControler{
         int index = Integer.parseInt(kittenIndexTextField.getText());
         game.humanPlacesKittenAt(index);
     }
+
+
 }

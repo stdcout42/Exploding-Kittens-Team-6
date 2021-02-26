@@ -1,5 +1,7 @@
 package softwaredesign.model;
 
+import java.util.ArrayList;
+
 /**
  * Abstract player class,
  * potential subclasses:
@@ -39,5 +41,8 @@ public abstract class Player {
         this.hasExplodingKitten = hasExplodingKitten;
     }
 
+    public abstract Card extractRandomCard();
     public abstract Card extractDefuseCard();
+
+    public abstract boolean hasCards();
 }
