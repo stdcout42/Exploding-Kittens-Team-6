@@ -34,7 +34,8 @@ public class Deck {
         deckPile.add(card);
     }
     public void placeCardAtIndex(int index, Card card) {
-        deckPile.add(index,card);
+        if(index >= deckPile.size()) deckPile.add(card);
+        else deckPile.add(index,card);
     }
     public void shuffleDeck() {
         Collections.shuffle(deckPile);
