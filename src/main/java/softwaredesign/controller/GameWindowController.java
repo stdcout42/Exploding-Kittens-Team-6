@@ -48,7 +48,6 @@ public class GameWindowController extends WindowControler{
 
     }
 
-
     @FXML
     private HBox botHBox;
 
@@ -103,7 +102,7 @@ public class GameWindowController extends WindowControler{
 
     @FXML
     private void playCardButtonAction() {
-        game.playerPlaysCard(null);
+        game.playerPlaysCard(null, true );
     }
 
     public void appendToLog(String text) {
