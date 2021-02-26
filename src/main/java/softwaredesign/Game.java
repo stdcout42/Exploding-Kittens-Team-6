@@ -15,6 +15,7 @@ public class Game{
     private int turnNumber;
     private GameWindowController gameWindowController;
     private Node cardNodeSelected;
+    private Node botNodeSelected;
     private boolean reverse;
 
     public void humanPlacesKittenAt(int index) {
@@ -26,6 +27,27 @@ public class Game{
             startNextTurn();
         }
         else gameWindowController.appendToLog("You can't do that yet!");
+    }
+
+    public void humanStealsFromBot(Node botAvatar) {
+        Player player = getPlayerThatHasTurn();
+        Card stolenCard;
+        if(player instanceof HumanPlayer && ((HumanPlayer) player).getIsStealing()) {
+            BotPlayer botPlayer = getBotFromAvatar(botAvatar);
+            stolenCard = botPlayer.extractRandomCard();
+            player.addCard(stolenCard);
+            gameWindowController.updateHumanCardListClickListeners();
+            gameWindowController.appendToLog("How sneaky. You stole a " + stolenCard.toString() + " card!");
+        }
+    }
+
+    private BotPlayer getBotFromAvatar(Node botAvatar) {
+        for (Player player : playerList) {
+            if(player instanceof BotPlayer && ((BotPlayer) player).getBotAvatar() == botAvatar) {
+                return (BotPlayer) player;
+            }
+        }
+        return (BotPlayer) playerList.get(1);
     }
 
     private enum MoveType {
@@ -42,6 +64,7 @@ public class Game{
         reverse = false;
         mainDeckOfCards = new Deck();
         cardNodeSelected = null;
+        botNodeSelected = null;
         turnNumber = 0;
         setupPlayers();
         dealCards();
@@ -156,6 +179,13 @@ public class Game{
         gameWindowController.resetcardSelectLabel();
     }
 
+    private void resetBotNodeSelected() {
+        botNodeSelected = null;
+        gameWindowController.resetBotSelectLabel();
+    }
+
+
+
     private void performCardLogic(Card cardPlayed) {
         switch (cardPlayed.cardType) {
             case REVERSE:
@@ -172,10 +202,32 @@ public class Game{
                 playerPlayedSeeFuture();
                 break;
             case STEAL:
-                // TODO
+                playerPlayedSteal();
                 break;
         }
         if(getPlayerThatHasTurn() instanceof BotPlayer) makeRandomBotMove((BotPlayer) getPlayerThatHasTurn());
+    }
+
+    private void playerPlayedSteal() {
+        Player player = getPlayerThatHasTurn();
+        Card stolenCard = null;
+        Player playerToDrawFrom = player;
+        if(player instanceof BotPlayer) {
+            while(playerToDrawFrom == player || !playerToDrawFrom.hasCards())
+                playerToDrawFrom = playerList.get(new Random().nextInt(playerList.size()));
+
+            stolenCard = playerToDrawFrom.extractRandomCard();
+            if(playerToDrawFrom instanceof HumanPlayer)
+                gameWindowController.appendToLog(player.toString() + " stole your " + stolenCard.toString() + " card!");
+             else
+                gameWindowController.appendToLog(player.toString() + " steals a card from " + playerToDrawFrom);
+            player.addCard(stolenCard);
+        } else {
+            gameWindowController.appendToLog("Select a player to steal a card from!");
+            botNodeSelected = null;
+            ((HumanPlayer) player).setIsStealing(true);
+        }
+
     }
 
     private void playerPlayedSeeFuture() {
@@ -219,7 +271,6 @@ public class Game{
         turnNumber = (reverse ? (turnNumber - 1) : (turnNumber + 1)) % playerList.size();
         turnNumber = (turnNumber < 0 ? turnNumber + playerList.size() : turnNumber);
         Player player = getPlayerThatHasTurn();
-        System.out.println("New turn: " + turnNumber + player.toString() + " turn.");
         if(player instanceof BotPlayer) makeRandomBotMove((BotPlayer) player);
         else gameWindowController.appendToLog("It's your turn!");
     }
@@ -248,6 +299,10 @@ public class Game{
 
     public void setCardNodeSelected(Node cardNode) {
         this.cardNodeSelected = cardNode;
+    }
+
+    public void setBotNodeSelected(Node botNode) {
+        this.botNodeSelected = botNode;
     }
 
     private void logMoveByPlayer(Player player, MoveType moveType, Card card) {

@@ -27,7 +27,9 @@ public class Deck {
         return deckPile.remove(0);
     }
     public List<Card> seeTopThreeCards(){
-        return new ArrayList<>(Arrays.asList(deckPile.get(0), deckPile.get(1), deckPile.get(2)));
+        ArrayList<Card> topThreeCards = new ArrayList<>();
+        for(int i = 0; i < 3 && i < deckPile.size(); i++) topThreeCards.add(deckPile.get(i));
+        return topThreeCards;
     }
 
     public void addToDeck(Card card){

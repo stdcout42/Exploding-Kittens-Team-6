@@ -3,43 +3,67 @@ package softwaredesign.model;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
-public class HumanPlayer extends Player{
-    private ObservableList<Node> cardList;
+import java.util.Random;
 
-    public HumanPlayer(int playerNumber, ObservableList<Node> cardList) {
+public class HumanPlayer extends Player{
+    private ObservableList<Node> obvservableNodeList;
+
+    private boolean isStealing;
+
+    public HumanPlayer(int playerNumber, ObservableList<Node> obvservableNodeList) {
         super(playerNumber);
-        this.cardList = cardList;
+        this.obvservableNodeList = obvservableNodeList;
+        isStealing = false;
     }
 
     public void addCard(Card card)
     {
-        this.cardList.add(card);
+        this.obvservableNodeList.add(card);
     }
 
     public void removeCard(Card card)
     {
-        this.cardList.remove(card);
+        this.obvservableNodeList.remove(card);
     }
 
     @Override
     public boolean hasDefuseCard() {
-        for(Node cardNode : cardList) {
+        for(Node cardNode : obvservableNodeList) {
             if(((Card) cardNode).cardType == Card.CardType.DEFUSE) return true;
         }
         return false;
     }
 
     @Override
+    public Card extractRandomCard() {
+        return (Card) obvservableNodeList.remove(new Random().nextInt(obvservableNodeList.size()));
+    }
+
+    @Override
     public Card extractDefuseCard() {
         Card defuseCard = null;
-        for (Node nodeCard: cardList) {
+        for (Node nodeCard: obvservableNodeList) {
             Card card = (Card) nodeCard;
             if (card.cardType == Card.CardType.DEFUSE) {
                 defuseCard = card;
-                cardList.remove(card);
+                obvservableNodeList.remove(card);
                 break;
             }
         }
         return defuseCard;
     }
+
+    @Override
+    public boolean hasCards() {
+        return !obvservableNodeList.isEmpty();
+    }
+
+    public void setIsStealing(boolean stealing) {
+        this.isStealing = stealing;
+    }
+
+    public boolean getIsStealing() {
+        return isStealing;
+    }
+
 }
