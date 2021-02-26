@@ -5,6 +5,7 @@ import softwaredesign.controller.GameWindowController;
 import softwaredesign.model.*;
 
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class Game{
@@ -73,11 +74,8 @@ public class Game{
         if (player instanceof BotPlayer) {
             if (player.hasDefuseCard()) {
                 playerPlaysCard(player.extractDefuseCard(), false);
-            } else {
-                killBot(player);
-            }
+            } else killBot(player);
         } else {
-            // human drew kitty
             if(player.hasDefuseCard()) {
                 gameWindowController.appendToLog("Play your defuse card!!");
             } else {
@@ -114,27 +112,25 @@ public class Game{
             logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, card);
             performCardLogic(card);
         }
-
     }
 
     private void playedPlaysDefuseCard(Player playerThatHasTurn, Card card) {
-
-            if(playerThatHasTurn instanceof HumanPlayer) {
-                if(!playerThatHasTurn.isExploding()) {
-                    gameWindowController.appendToLog("You can't play that card right now!");
-                    gameWindowController.updateHumanCardListClickListeners();
-                    return;
-                }
-                // Played played a valid defuse card
-                gameWindowController.appendToLog("Choose an index to where you want to place the exploding kitten.");
-                movePlayedCardToPlayedPile(card, playerThatHasTurn);
-            } else {
-                placeKittenRandomlyInDeck();
-                playerThatHasTurn.setHasExplodingKitten(false);
-                movePlayedCardToPlayedPile(card, playerThatHasTurn);
-                logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, card);
-                startNextTurn();
+        if(playerThatHasTurn instanceof HumanPlayer) {
+            if(!playerThatHasTurn.isExploding()) {
+                gameWindowController.appendToLog("You can't play that card right now!");
+                gameWindowController.updateHumanCardListClickListeners();
+                return;
             }
+            // Played played a valid defuse card
+            gameWindowController.appendToLog("Choose an index to where you want to place the exploding kitten.");
+            movePlayedCardToPlayedPile(card, playerThatHasTurn);
+        } else {
+            placeKittenRandomlyInDeck();
+            playerThatHasTurn.setHasExplodingKitten(false);
+            movePlayedCardToPlayedPile(card, playerThatHasTurn);
+            logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, card);
+            startNextTurn();
+        }
     }
 
     private Card getCardSelectedNodeAndResetNode() {
@@ -173,13 +169,27 @@ public class Game{
                 mainDeckOfCards.shuffleDeck();
                 break;
             case SEE_THE_FUTURE:
-                // TODO
+                playerPlayedSeeFuture();
                 break;
             case STEAL:
                 // TODO
                 break;
         }
         if(getPlayerThatHasTurn() instanceof BotPlayer) makeRandomBotMove((BotPlayer) getPlayerThatHasTurn());
+    }
+
+    private void playerPlayedSeeFuture() {
+        Player player = getPlayerThatHasTurn();
+        if(player instanceof HumanPlayer) {
+            logTopThreeCards();
+        }
+    }
+
+    private void logTopThreeCards() {
+        gameWindowController.appendToLog("Top three cards are:");
+        for (Card card : mainDeckOfCards.seeTopThreeCards()) {
+            gameWindowController.appendToLog(card.toString());
+        }
     }
 
     private void setupPlayers() {
