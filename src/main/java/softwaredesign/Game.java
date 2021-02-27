@@ -116,8 +116,10 @@ public class Game{
 
     public void playerPlaysCard(Card card, boolean isHuman) {
         Player playerThatHasTurn = getPlayerThatHasTurn();
-        if (!moveAllowed(isHuman, MoveType.PLAY, card)) return;
-        if(isHuman) card = getCardSelectedNodeAndResetNode();
+        if(isHuman) {
+            if(!humanIsAllowedToPlayCard(card)) return;
+            card = getCardSelectedNodeAndResetNode();
+        }
         performCardLogic(card);
 
 //        if(card.cardType == Card.CardType.DEFUSE)
@@ -129,32 +131,30 @@ public class Game{
 //        }
     }
 
-    private boolean moveAllowed(boolean isHuman, MoveType moveType, Card card) {
+    private boolean humanIsAllowedToPlayCard(Card card) {
         Player playerThatHasTurn = getPlayerThatHasTurn();
-        if(moveType == MoveType.PLAY) {
-            if(isHuman) {
-                if(playerThatHasTurn instanceof BotPlayer) {
-                    gameWindowController.appendToLog("It's not your turn yet!");
-                    return false;
-                }
-                if(cardNodeSelected == null) {
-                    gameWindowController.appendToLog("Please select a card to play!");
-                    return false;
-                }
-                card = getCardSelectedNodeAndResetNode();
-                if(playerThatHasTurn.isExploding() && card.cardType != Card.CardType.DEFUSE) {
-                    gameWindowController.appendToLog("You can't play that, you're on fire!!");
-                    return false;
-                }
-                if(card.cardType == Card.CardType.STEAL && !otherPlayersHaveCards(isHuman)) {
-                    gameWindowController.appendToLog("Other players don't have any cards you can steal.");
-                    return false;
-                }
-            } else {
-
+        if (playerThatHasTurn instanceof BotPlayer) {
+            gameWindowController.appendToLog("It's not your turn yet!");
+            return false;
+        }
+        if (cardNodeSelected == null) {
+            gameWindowController.appendToLog("Please select a card to play!");
+            return false;
+        }
+        card = getCardSelectedNodeAndResetNode();
+        if (playerThatHasTurn.isExploding() && card.cardType != Card.CardType.DEFUSE) {
+            gameWindowController.appendToLog("You can't play that, you're on fire!!");
+            return false;
+        }
+        if (card.cardType == Card.CardType.STEAL && !otherPlayersHaveCards(isHuman)) {
+            gameWindowController.appendToLog("Other players don't have any cards you can steal.");
+            return false;
+        }
+        if (card.cardType == Card.CardType.DEFUSE) {
+            if (!playerThatHasTurn.isExploding()) {
+                gameWindowController.appendToLog("You can't play that card right now!");
+                return false;
             }
-        } else{
-
         }
         return true;
     }
@@ -168,6 +168,12 @@ public class Game{
             return false;
         } else {
             Player player = getPlayerThatHasTurn();
+            for (Player otherPlayer : playerList) {
+                if(player != otherPlayer && otherPlayer.hasCards()) {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 
