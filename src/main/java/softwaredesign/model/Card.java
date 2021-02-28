@@ -40,7 +40,7 @@ public class Card extends Parent {
         cardRectangle = new Rectangle(80, 100);
         cardRectangle.setArcWidth(20);
         cardRectangle.setArcHeight(20);
-        cardRectangle.setFill(Color.ALICEBLUE);
+        cardRectangle.setFill(Color.GREENYELLOW);
 
         Text text = new Text(toString());
         text.setWrappingWidth(70);

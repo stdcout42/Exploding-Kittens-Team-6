@@ -1,7 +1,5 @@
 package softwaredesign.model;
 
-import java.util.ArrayList;
-
 /**
  * Abstract player class,
  * potential subclasses:
@@ -12,37 +10,29 @@ import java.util.ArrayList;
 
 public abstract class Player {
 
-    private int playerNumber;
-    private boolean hasExplodingKitten;
+    private final int playerNumber;
+    private boolean isExploding;
 
-    public Player(int playerNumber) {
+    protected Player(int playerNumber) {
         this.playerNumber = playerNumber;
-        this.hasExplodingKitten = false;
+        this.isExploding = false;
     }
 
     public abstract void addCard(Card card);
     public abstract void removeCard(Card card);
-    public int getPlayerNumber() {
-        return playerNumber;
-    }
-
     public abstract boolean hasDefuseCard();
+    public abstract Card extractRandomCard();
+    public abstract Card extractDefuseCard();
+    public abstract boolean hasCards();
+
+    public boolean getIsExploding() {return isExploding; }
+    public void setIsExploding(boolean hasExplodingKitten) {
+        this.isExploding = hasExplodingKitten;
+    }
 
     @Override
     public String toString() {
         return "Player " + playerNumber;
     }
 
-    public boolean isExploding() {
-        return hasExplodingKitten;
-    }
-
-    public void setHasExplodingKitten(boolean hasExplodingKitten) {
-        this.hasExplodingKitten = hasExplodingKitten;
-    }
-
-    public abstract Card extractRandomCard();
-    public abstract Card extractDefuseCard();
-
-    public abstract boolean hasCards();
 }

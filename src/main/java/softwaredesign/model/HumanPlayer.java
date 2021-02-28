@@ -59,9 +59,7 @@ public class HumanPlayer extends Player{
         return !obvservableNodeList.isEmpty();
     }
 
-    public void setIsStealing(boolean stealing) {
-        this.isStealing = stealing;
-    }
+    public void setIsStealing(boolean stealing) {this.isStealing = stealing;}
 
     public boolean getIsStealing() {
         return isStealing;

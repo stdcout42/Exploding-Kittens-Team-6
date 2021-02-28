@@ -1,5 +1,6 @@
 package softwaredesign.controller;
 
+import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXTextField;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -27,6 +28,15 @@ public class GameWindowController extends WindowControler{
     private HBox playerCardHBox;
 
     @FXML
+    private JFXButton drawButton;
+
+    @FXML
+    private JFXButton playCardButton;
+
+    @FXML
+    private JFXButton placeButton;
+
+    @FXML
     private TextArea logTextArea;
 
     @FXML
@@ -38,10 +48,6 @@ public class GameWindowController extends WindowControler{
 
     @FXML
     private HBox playedCardsHBox;
-
-    public HBox getBotHBox() {
-        return botHBox;
-    }
 
     @FXML
     private HBox botHBox;
@@ -76,29 +82,8 @@ public class GameWindowController extends WindowControler{
         }
     }
 
-    private void initLogTextArea() {
-        logTextArea.setEditable(false);
-        logTextArea.appendText("A new game has been started!\n");
-        logTextArea.appendText("It's your turn!\n");
-    }
-
-    public void updateHumanCardListClickListeners() {
-        for (Node card : playerCardHBox.getChildren()) {
-            card.setOnMouseClicked(mouseEvent -> {
-                cardSelectLabel.setText(card.toString() + " card selected");
-                game.setCardNodeSelected(card);
-            });
-        }
-    }
-
-    @FXML
-    private void drawButtonAction() {
-        game.playerDraws(true);
-    }
-
-    @FXML
-    private void playCardButtonAction() {
-        game.playerPlaysCard(null, true );
+    public HBox getBotHBox() {
+        return botHBox;
     }
 
     public void appendToLog(String text) {
@@ -126,8 +111,33 @@ public class GameWindowController extends WindowControler{
         botHBox.getChildren().remove(botAvatar);
     }
 
+    public void updateHumanCardListClickListeners() {
+        for (Node card : playerCardHBox.getChildren()) {
+            card.setOnMouseClicked(mouseEvent -> {
+                cardSelectLabel.setText(card.toString() + " card selected");
+                game.setCardNodeSelected(card);
+            });
+        }
+    }
+
+    private void initLogTextArea() {
+        logTextArea.setEditable(false);
+        logTextArea.appendText("A new game has been started!\n");
+        logTextArea.appendText("It's your turn!\n");
+    }
+
     @FXML
-    void placeButtonAction() {
+    private void drawButtonAction() {
+        game.playerDraws(true);
+    }
+
+    @FXML
+    private void playCardButtonAction() {
+        game.playerPlaysCard(null, true );
+    }
+
+    @FXML
+    private void placeButtonAction() {
         try {
             int index = Integer.parseInt(kittenIndexTextField.getText());
             game.humanPlacesKittenAt(index);
@@ -135,6 +145,5 @@ public class GameWindowController extends WindowControler{
             appendToLog("Indices are usually numeric...");
         }
     }
-
 
 }
