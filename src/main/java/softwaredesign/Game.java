@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game{
-    private int numberOfPlayers = 5;
+    private int numberOfPlayers;
     private Deck mainDeckOfCards;
     private ArrayList <Player> playerList;
     private int turnNumber;
@@ -81,9 +81,10 @@ public class Game{
         performCardLogic(card, playerThatHasTurn);
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        if(numberOfPlayers > 1 && numberOfPlayers < 6)
-            this.numberOfPlayers = numberOfPlayers;
+
+    public void setNumberOfPlayers(int numberPlayers) {
+        if(numberPlayers < 6)
+            this.numberOfPlayers = 1 + numberPlayers;
     }
 
     public void setCardNodeSelected(Node cardNode) {
@@ -129,7 +130,8 @@ public class Game{
             if(player.hasDefuseCard()) {
                 gameWindowController.appendToLog("Play your defuse card!!");
             } else {
-                // TODO: GameOver for human player
+                gameWonByHuman = false;
+                gameWindowController.appendToLog("GAME OVER");
             }
         }
     }
