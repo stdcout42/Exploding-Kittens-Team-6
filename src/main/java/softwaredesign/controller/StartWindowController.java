@@ -18,14 +18,14 @@ public class StartWindowController extends WindowControler{
     private Label titleLabel;
 
     @FXML
-    void playButtonAction() {
+    private void playButtonAction() {
         viewFactory.showGameWindow();
         Stage thisStage = (Stage) titleLabel.getScene().getWindow();
         viewFactory.closeStage(thisStage);
     }
 
     @FXML
-    void optionsButtonAction() {
+    private void optionsButtonAction() {
         // TODO
     }
 
