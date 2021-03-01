@@ -13,11 +13,11 @@ public class Card extends Parent {
         public static int getNumOfCards(CardType cardType){
             switch (cardType) {
                 case SKIP:
-                    return 4;
+                    return 6;
                 case SEE_THE_FUTURE:
-                    return 5;
+                    return 6;
                 case REVERSE:
-                    return 4;
+                    return 6;
                 case SHUFFLE:
                     return 6;
                 case STEAL:
@@ -32,10 +32,6 @@ public class Card extends Parent {
         }
     }
 
-    public Rectangle getCardRectangle() {
-        return cardRectangle;
-    }
-
     private Rectangle cardRectangle;
     public final CardType cardType;
     public Card(CardType cardType) {
@@ -44,8 +40,7 @@ public class Card extends Parent {
         cardRectangle = new Rectangle(80, 100);
         cardRectangle.setArcWidth(20);
         cardRectangle.setArcHeight(20);
-        cardRectangle.setFill(Color.ALICEBLUE);
-
+        cardRectangle.setFill(Color.GREENYELLOW);
 
         Text text = new Text(toString());
         text.setWrappingWidth(70);
