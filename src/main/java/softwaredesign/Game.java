@@ -16,6 +16,7 @@ public class Game{
     private Node cardNodeSelected;
     private boolean reverse;
     private boolean gameWonByHuman;
+    private boolean gameover;
 
     public void setupGame(GameWindowController controller){
         this.gameWindowController = controller;
@@ -23,6 +24,7 @@ public class Game{
         mainDeckOfCards = new Deck();
         cardNodeSelected = null;
         gameWonByHuman = false;
+        gameover = false;
         turnNumber = 0;
         setupPlayers();
         dealCards();
@@ -130,7 +132,7 @@ public class Game{
             if(player.hasDefuseCard()) {
                 gameWindowController.appendToLog("Play your defuse card!!");
             } else {
-                gameWonByHuman = false;
+                gameover = true;
                 gameWindowController.appendToLog("GAME OVER");
             }
         }
@@ -337,7 +339,12 @@ public class Game{
         Player player = getPlayerThatHasTurn();
         if(player instanceof BotPlayer) makeRandomBotMove((BotPlayer) player);
         else {
-            // TODO: If game won
+            if(playerList.size() == 1){
+                gameover = true;
+                gameWonByHuman = true;
+                gameWindowController.appendToLog("GAME WON");
+                return;
+            }
             gameWindowController.updateHumanCardListClickListeners();
             gameWindowController.appendToLog("It's your turn!");
         }
