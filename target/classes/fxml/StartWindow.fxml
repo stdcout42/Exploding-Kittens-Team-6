@@ -35,7 +35,7 @@
                   </VBox>
                   <HBox alignment="CENTER" layoutX="167.0" prefHeight="54.0" prefWidth="201.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="20.0">
                      <children>
-                        <Label text="Exploding Kittens Team 6" textFill="#ffee33">
+                        <Label fx:id="titleLabel" text="Exploding Kittens Team 6" textFill="#ffee33">
                            <font>
                               <Font name="Bitstream Vera Sans Bold" size="13.0" />
                            </font></Label>
