@@ -21,7 +21,7 @@
                <children>
                   <VBox alignment="CENTER" layoutX="91.0" layoutY="92.0" prefHeight="107.0" prefWidth="338.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="55.0">
                      <children>
-                        <JFXButton id="playbutton" fx:id="playButton" buttonType="RAISED" prefHeight="36.0" prefWidth="208.0" text="Play a game against bots" textFill="WHITE">
+                        <JFXButton id="playbutton" onAction="#playButtonAction" buttonType="RAISED" prefHeight="36.0" prefWidth="208.0" text="Play a game against bots" textFill="WHITE">
                            <font>
                               <Font name="Cantarell Extra Bold" size="16.0" />
                            </font>
@@ -31,13 +31,13 @@
                               <Font name="Cantarell Extra Bold" size="13.0" />
                            </font>
                         </Label>
-
-                        <ChoiceBox fx:id="optionsButton" value="1"  prefHeight="36.0" prefWidth="208.0" >
+                        <ChoiceBox fx:id="optionsButton" prefHeight="36.0" prefWidth="208.0" >
                            <items >
                               <FXCollections fx:factory="observableArrayList">
                                  <Integer fx:value="1" />
                                  <Integer fx:value="2" />
                                  <Integer fx:value="3" />
+                                 <Integer fx:value="4" />
                               </FXCollections>
                            </items>
                         </ChoiceBox>

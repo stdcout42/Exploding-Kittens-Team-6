@@ -24,16 +24,19 @@ public class StartWindowController extends WindowControler{
 
     @FXML
     private void playButtonAction() {
-//        System.err.println(optionsButton.getValue());
-        game.setNumberOfPlayers(optionsButton.getValue());
+        if(optionsButton.getValue() == null){
+            game.setNumberOfPlayers(1);
+        }else {
+            game.setNumberOfPlayers(optionsButton.getValue());
+        }
         viewFactory.showGameWindow();
         Stage thisStage = (Stage) titleLabel.getScene().getWindow();
         viewFactory.closeStage(thisStage);
     }
 
-    @FXML
-    private void optionsButtonAction() {
-    }
+//    @FXML
+//    private void optionsButtonAction() {
+//    }
 
 
     @Override
