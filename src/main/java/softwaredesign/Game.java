@@ -260,10 +260,12 @@ public class Game{
             case REVERSE:
                 flipDirection();
                 logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardPlayed);
+                movePlayedCardToPlayedPile(cardPlayed, playerThatHasTurn);
                 startNextTurn();
                 return;
             case SKIP:
                 logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardPlayed);
+                movePlayedCardToPlayedPile(cardPlayed, playerThatHasTurn);
                 startNextTurn();
                 return;
             case SHUFFLE:
