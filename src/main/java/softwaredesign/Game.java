@@ -111,6 +111,7 @@ public class Game{
     }
 
     private boolean humanIsAllowedToDraw(Player playerThatHasTurn) {
+
         if (playerThatHasTurn instanceof BotPlayer) {
             gameWindowController.appendToLog("It's not your turn yet!");
             return false;
@@ -123,6 +124,9 @@ public class Game{
     }
 
     private void playerDrawsKitten(Player player) {
+        if(gameover){
+            return;
+        }
         player.setIsExploding(true);
         if (player instanceof BotPlayer) {
             if (player.hasDefuseCard()) {
@@ -147,6 +151,9 @@ public class Game{
     }
 
     private boolean botIsAllowedToPlayCard(Card card) {
+        if(gameover){
+            return false;
+        }
         Player playerThatHasTurn = getPlayerThatHasTurn();
         if (card.cardType == Card.CardType.DEFUSE && !playerThatHasTurn.getIsExploding()) return false;
         if (card.cardType == Card.CardType.STEAL && !otherPlayersHaveCards(false)) return false;
@@ -155,6 +162,9 @@ public class Game{
     }
 
     private boolean humanIsAllowedToPlayCard() {
+        if(gameover){
+            return false;
+        }
         Player playerThatHasTurn = getPlayerThatHasTurn();
         if (playerThatHasTurn instanceof BotPlayer) {
             gameWindowController.appendToLog("It's not your turn yet!");
@@ -201,6 +211,9 @@ public class Game{
     }
 
     private void playerPlaysDefuseCard(Player playerThatHasTurn) {
+        if(gameover){
+            return;
+        }
         logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, new Card(Card.CardType.DEFUSE));
         if(playerThatHasTurn instanceof HumanPlayer) {
             // Played played a valid defuse card
