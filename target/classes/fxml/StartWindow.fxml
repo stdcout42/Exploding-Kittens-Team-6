@@ -9,7 +9,10 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import javafx.collections.*?>
 
+<?import javafx.scene.control.ChoiceBox?>
+<?import java.lang.Integer?>
 <AnchorPane prefHeight="417.0" prefWidth="465.0" style="-fx-background-color: transparent;" stylesheets="@../windowcss/style.css" xmlns="http://javafx.com/javafx/11.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane layoutX="30.0" layoutY="120.0" prefHeight="377.0" prefWidth="400.0" style="-fx-background-color: transparent;" AnchorPane.leftAnchor="30.0" AnchorPane.topAnchor="25.0">
@@ -18,19 +21,26 @@
                <children>
                   <VBox alignment="CENTER" layoutX="91.0" layoutY="92.0" prefHeight="107.0" prefWidth="338.0" AnchorPane.leftAnchor="30.0" AnchorPane.rightAnchor="30.0" AnchorPane.topAnchor="55.0">
                      <children>
-                        <JFXButton id="playbutton" fx:id="playButton" buttonType="RAISED" onAction="#playButtonAction" prefHeight="36.0" prefWidth="208.0" text="Play a game against bots" textFill="WHITE">
+                        <JFXButton id="playbutton" onAction="#playButtonAction" buttonType="RAISED" prefHeight="36.0" prefWidth="208.0" text="Play a game against bots" textFill="WHITE">
                            <font>
                               <Font name="Cantarell Extra Bold" size="16.0" />
                            </font>
                         </JFXButton>
-                        <JFXButton id="optionsbutton" onAction="#optionsButtonAction" prefHeight="36.0" prefWidth="208.0" text="Options" textFill="WHITE">
-                           <VBox.margin>
-                              <Insets top="10.0" />
-                           </VBox.margin>
+                        <Label>Enter the number of bot players to play against
                            <font>
-                              <Font name="Cantarell Extra Bold" size="16.0" />
+                              <Font name="Cantarell Extra Bold" size="13.0" />
                            </font>
-                        </JFXButton>
+                        </Label>
+                        <ChoiceBox fx:id="optionsButton" prefHeight="36.0" prefWidth="208.0" >
+                           <items >
+                              <FXCollections fx:factory="observableArrayList">
+                                 <Integer fx:value="1" />
+                                 <Integer fx:value="2" />
+                                 <Integer fx:value="3" />
+                                 <Integer fx:value="4" />
+                              </FXCollections>
+                           </items>
+                        </ChoiceBox>
                      </children>
                   </VBox>
                   <HBox alignment="CENTER" layoutX="167.0" prefHeight="54.0" prefWidth="201.0" AnchorPane.leftAnchor="80.0" AnchorPane.rightAnchor="80.0" AnchorPane.topAnchor="20.0">
