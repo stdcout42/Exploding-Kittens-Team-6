@@ -8,7 +8,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 public class Game{
-    private int numberOfPlayers = 5;
+    private int numberOfPlayers;
     private Deck mainDeckOfCards;
     private ArrayList <Player> playerList;
     private int turnNumber;
@@ -16,6 +16,7 @@ public class Game{
     private Node cardNodeSelected;
     private boolean reverse;
     private boolean gameWonByHuman;
+    private boolean gameover;
 
     public void setupGame(GameWindowController controller){
         this.gameWindowController = controller;
@@ -23,6 +24,7 @@ public class Game{
         mainDeckOfCards = new Deck();
         cardNodeSelected = null;
         gameWonByHuman = false;
+        gameover = false;
         turnNumber = 0;
         setupPlayers();
         dealCards();
@@ -81,9 +83,10 @@ public class Game{
         performCardLogic(card, playerThatHasTurn);
     }
 
-    public void setNumberOfPlayers(int numberOfPlayers) {
-        if(numberOfPlayers > 1 && numberOfPlayers < 6)
-            this.numberOfPlayers = numberOfPlayers;
+
+    public void setNumberOfPlayers(int numberPlayers) {
+        if(numberPlayers < 6)
+            this.numberOfPlayers = 1 + numberPlayers;
     }
 
     public void setCardNodeSelected(Node cardNode) {
@@ -108,6 +111,7 @@ public class Game{
     }
 
     private boolean humanIsAllowedToDraw(Player playerThatHasTurn) {
+
         if (playerThatHasTurn instanceof BotPlayer) {
             gameWindowController.appendToLog("It's not your turn yet!");
             return false;
@@ -120,6 +124,9 @@ public class Game{
     }
 
     private void playerDrawsKitten(Player player) {
+        if(gameover){
+            return;
+        }
         player.setIsExploding(true);
         if (player instanceof BotPlayer) {
             if (player.hasDefuseCard()) {
@@ -129,7 +136,8 @@ public class Game{
             if(player.hasDefuseCard()) {
                 gameWindowController.appendToLog("Play your defuse card!!");
             } else {
-                // TODO: GameOver for human player
+                gameover = true;
+                gameWindowController.appendToLog("GAME OVER");
             }
         }
     }
@@ -143,6 +151,9 @@ public class Game{
     }
 
     private boolean botIsAllowedToPlayCard(Card card) {
+        if(gameover){
+            return false;
+        }
         Player playerThatHasTurn = getPlayerThatHasTurn();
         if (card.cardType == Card.CardType.DEFUSE && !playerThatHasTurn.getIsExploding()) return false;
         if (card.cardType == Card.CardType.STEAL && !otherPlayersHaveCards(false)) return false;
@@ -151,6 +162,9 @@ public class Game{
     }
 
     private boolean humanIsAllowedToPlayCard() {
+        if(gameover){
+            return false;
+        }
         Player playerThatHasTurn = getPlayerThatHasTurn();
         if (playerThatHasTurn instanceof BotPlayer) {
             gameWindowController.appendToLog("It's not your turn yet!");
@@ -197,6 +211,9 @@ public class Game{
     }
 
     private void playerPlaysDefuseCard(Player playerThatHasTurn) {
+        if(gameover){
+            return;
+        }
         logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, new Card(Card.CardType.DEFUSE));
         if(playerThatHasTurn instanceof HumanPlayer) {
             // Played played a valid defuse card
@@ -337,7 +354,12 @@ public class Game{
         Player player = getPlayerThatHasTurn();
         if(player instanceof BotPlayer) makeRandomBotMove((BotPlayer) player);
         else {
-            // TODO: If game won
+            if(playerList.size() == 1){
+                gameover = true;
+                gameWonByHuman = true;
+                gameWindowController.appendToLog("GAME WON");
+                return;
+            }
             gameWindowController.updateHumanCardListClickListeners();
             gameWindowController.appendToLog("It's your turn!");
         }
