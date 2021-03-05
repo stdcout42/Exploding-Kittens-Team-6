@@ -15,7 +15,6 @@ public class Game{
     private GameWindowController gameWindowController;
     private Node cardNodeSelected;
     private boolean reverse;
-    private boolean gameWonByHuman;
     private boolean gameover;
 
     public void setupGame(GameWindowController controller){
@@ -23,7 +22,6 @@ public class Game{
         reverse = false;
         mainDeckOfCards = new Deck();
         cardNodeSelected = null;
-        gameWonByHuman = false;
         gameover = false;
         turnNumber = 0;
         setupPlayers();
@@ -51,10 +49,10 @@ public class Game{
 
     public void humanPlacesKittenAt(int index) {
         Player playerThatHasTurn = getPlayerThatHasTurn();
-        if(playerThatHasTurn instanceof HumanPlayer && playerThatHasTurn.getIsExploding()) {
+        if(playerThatHasTurn instanceof HumanPlayer && ((HumanPlayer) playerThatHasTurn).getPlayedDefuseCard()) {
             mainDeckOfCards.placeCardAtIndex(index, new Card(Card.CardType.EXPLODING_KITTEN));
-            playerThatHasTurn.setIsExploding(false);
             gameWindowController.appendToLog("You've placed the kitten in position: " + index);
+            ((HumanPlayer) playerThatHasTurn).setPlayedDefuseCard(false);
             startNextTurn();
         }
         else gameWindowController.appendToLog("You can't do that yet!");
@@ -217,11 +215,13 @@ public class Game{
         logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, new Card(Card.CardType.DEFUSE));
         if(playerThatHasTurn instanceof HumanPlayer) {
             // Played played a valid defuse card
+            ((HumanPlayer)playerThatHasTurn).setPlayedDefuseCard(true);
             gameWindowController.appendToLog("Choose an index to where you want to place the exploding kitten.");
         } else {
             placeKittenRandomlyInDeck();
             startNextTurn();
         }
+        playerThatHasTurn.setIsExploding(false);
     }
 
     private Card getCardSelectedNodeAndResetNode() {
@@ -356,7 +356,6 @@ public class Game{
         else {
             if(playerList.size() == 1){
                 gameover = true;
-                gameWonByHuman = true;
                 gameWindowController.appendToLog("GAME WON");
                 return;
             }
