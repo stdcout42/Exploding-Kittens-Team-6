@@ -259,15 +259,9 @@ public class Game{
         switch (cardPlayed.cardType) {
             case REVERSE:
                 flipDirection();
-                logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardPlayed);
-                movePlayedCardToPlayedPile(cardPlayed, playerThatHasTurn);
-                startNextTurn();
-                return;
+                break;
             case SKIP:
-                logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardPlayed);
-                movePlayedCardToPlayedPile(cardPlayed, playerThatHasTurn);
-                startNextTurn();
-                return;
+                break;
             case SHUFFLE:
                 mainDeckOfCards.shuffleDeck();
                 break;
@@ -285,6 +279,10 @@ public class Game{
         if(cardPlayed.cardType != Card.CardType.SEE_THE_FUTURE
                 && cardPlayed.cardType != Card.CardType.STEAL && cardPlayed.cardType != Card.CardType.DEFUSE)
             logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardPlayed);
+        if(cardPlayed.cardType == Card.CardType.REVERSE || cardPlayed.cardType == Card.CardType.SKIP) {
+            startNextTurn();
+            return;
+        }
         if(getPlayerThatHasTurn() instanceof BotPlayer) makeRandomBotMove((BotPlayer) getPlayerThatHasTurn());
     }
 
