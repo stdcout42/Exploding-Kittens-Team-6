@@ -3,18 +3,18 @@ package softwaredesign.model;
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
 
-import java.util.Collections;
 import java.util.Random;
 
 public class HumanPlayer extends Player{
     private ObservableList<Node> obvservableNodeList;
-
+    private boolean playedDefuseCard;
     private boolean isStealing;
 
     public HumanPlayer(int playerNumber, ObservableList<Node> obvservableNodeList) {
         super(playerNumber);
         this.obvservableNodeList = obvservableNodeList;
         isStealing = false;
+        playedDefuseCard = false;
     }
 
     public void addCard(Card card)
@@ -65,4 +65,11 @@ public class HumanPlayer extends Player{
         return isStealing;
     }
 
+    public boolean getPlayedDefuseCard() {
+        return playedDefuseCard;
+    }
+
+    public void setPlayedDefuseCard(boolean playedDefuseCard) {
+        this.playedDefuseCard = playedDefuseCard;
+    }
 }
