@@ -1,0 +1,29 @@
+Label, JFXTextField {
+    -fx-text-fill: white;
+}
+
+#playbutton, #optionsbutton  {
+    -fx-background-color: linear-gradient(to right top, #d4a112, #dbae10, #e1bc0f, #e7ca0f, #ebd812);
+    -fx-background-radius: 10;
+}
+
+#playbutton:hover, #optionsbutton:hover {
+    -fx-background-color: red;
+}
+#drawButton {
+    -fx-background-color: #29e31b;
+    -fx-background-radius: 10;
+}
+#playCardButton {
+    -fx-background-color: #cfe31b;
+    -fx-background-radius: 10;
+}
+#placeButton {
+    -fx-background-color: #fc6b03;
+    -fx-background-radius: 10;
+}
+
+#logTextArea .content{
+    -fx-background-color:  #FBCE00;
+}
+
