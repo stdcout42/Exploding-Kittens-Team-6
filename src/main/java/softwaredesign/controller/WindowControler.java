@@ -1,7 +1,7 @@
 package softwaredesign.controller;
 
 import javafx.fxml.Initializable;
-import softwaredesign.Game;
+import softwaredesign.gamelogic.Game;
 import softwaredesign.view.ViewFactory;
 
 /**

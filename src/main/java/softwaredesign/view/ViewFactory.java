@@ -6,13 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import softwaredesign.Game;
+import softwaredesign.gamelogic.Game;
 import softwaredesign.controller.GameWindowController;
 import softwaredesign.controller.StartWindowController;
 import softwaredesign.controller.WindowControler;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * ViewFactory will produce views/windows when called from a controller or initially from App
