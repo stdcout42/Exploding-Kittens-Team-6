@@ -10,14 +10,13 @@ import javafx.scene.text.Text;
 
 public class BotAvatar extends Parent {
     private final int botNumber;
-    private Rectangle botRectangle;
     private int numOfCards;
-    private Text numberOfCardsText;
+    private final Text numberOfCardsText;
 
     public BotAvatar(int botNumber) {
         this.botNumber = botNumber;
         this.numOfCards = 0;
-        botRectangle = new Rectangle(80, 100);
+        Rectangle botRectangle = new Rectangle(80, 80);
         botRectangle.setArcWidth(20);
         botRectangle.setArcHeight(20);
         botRectangle.setFill(Color.ORANGE);

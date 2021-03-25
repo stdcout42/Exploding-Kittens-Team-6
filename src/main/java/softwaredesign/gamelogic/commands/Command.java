@@ -1,4 +1,6 @@
-package softwaredesign.gamelogic;
+package softwaredesign.gamelogic.commands;
+
+import softwaredesign.gamelogic.Game;
 
 public abstract class Command {
     protected Game game;
@@ -6,6 +8,6 @@ public abstract class Command {
     protected Command(Game game) {
         this.game = game;
     }
-    
-    protected abstract void execute();
+
+    public abstract void execute();
 }

@@ -10,7 +10,7 @@ import softwaredesign.view.ViewFactory;
 public abstract class WindowControler implements Initializable {
     protected Game game;
     protected ViewFactory viewFactory;
-    private String fxmlName;
+    private final String fxmlName;
 
     public WindowControler(Game game, ViewFactory viewFactory, String fxmlName) {
         this.game = game;

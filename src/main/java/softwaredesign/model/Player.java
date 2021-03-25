@@ -1,5 +1,7 @@
 package softwaredesign.model;
 
+import softwaredesign.gamelogic.cards.Card;
+
 public abstract class Player {
 
     private final int playerNumber;
