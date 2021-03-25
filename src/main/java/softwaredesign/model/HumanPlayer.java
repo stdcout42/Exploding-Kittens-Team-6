@@ -2,11 +2,13 @@ package softwaredesign.model;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
+import softwaredesign.gamelogic.cards.Card;
+import softwaredesign.gamelogic.cards.DefuseCard;
 
 import java.util.Random;
 
 public class HumanPlayer extends Player{
-    private ObservableList<Node> obvservableNodeList;
+    private final ObservableList<Node> obvservableNodeList;
     private boolean playedDefuseCard;
     private boolean isStealing;
 
@@ -30,7 +32,7 @@ public class HumanPlayer extends Player{
     @Override
     public boolean hasDefuseCard() {
         for(Node cardNode : obvservableNodeList) {
-            if(((Card) cardNode).cardType == Card.CardType.DEFUSE) return true;
+            if(cardNode instanceof DefuseCard) return true;
         }
         return false;
     }
@@ -45,7 +47,7 @@ public class HumanPlayer extends Player{
         Card defuseCard = null;
         for (Node nodeCard: obvservableNodeList) {
             Card card = (Card) nodeCard;
-            if (card.cardType == Card.CardType.DEFUSE) {
+            if (card instanceof DefuseCard) {
                 defuseCard = card;
                 obvservableNodeList.remove(card);
                 break;

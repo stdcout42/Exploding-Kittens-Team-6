@@ -20,7 +20,7 @@ public class ViewFactory {
     private final String startWindowFxmlPath = "/fxml/StartWindow.fxml";
     private final String gameWindowFxmlPath = "/fxml/GameWindow.fxml";
 
-    private Game game;
+    private final Game game;
 
     public ViewFactory(Game game) {
         this.game = game;

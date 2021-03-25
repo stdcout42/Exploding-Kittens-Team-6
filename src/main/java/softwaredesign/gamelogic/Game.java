@@ -3,24 +3,28 @@ package softwaredesign.gamelogic;
 import javafx.scene.Node;
 import softwaredesign.controller.GameWindowController;
 import softwaredesign.model.*;
+import softwaredesign.gamelogic.cards.*;
 
 import java.util.ArrayList;
 import java.util.Random;
 
 public class Game{
     private int numberOfPlayers;
+    private int turnNumber;
     private Deck mainDeckOfCards;
     private ArrayList <Player> playerList;
-    private int turnNumber;
     private GameWindowController gameWindowController;
     private Node cardNodeSelected;
     private boolean reverse;
     private boolean gameover;
+    private CardFactory cardFactory;
+    private enum MoveType { PLAY, DRAW }
 
     public void setupGame(GameWindowController controller){
         this.gameWindowController = controller;
+        this.cardFactory = new CardFactory(this);
         reverse = false;
-        mainDeckOfCards = new Deck();
+        mainDeckOfCards = new Deck(cardFactory);
         cardNodeSelected = null;
         gameover = false;
         turnNumber = 0;
@@ -37,20 +41,20 @@ public class Game{
         Card drawnCard = mainDeckOfCards.drawCard();
         logMoveByPlayer(getPlayerThatHasTurn(), MoveType.DRAW, drawnCard);
 
-        if(drawnCard.cardType == Card.CardType.EXPLODING_KITTEN) {
+        if(drawnCard instanceof ExplodingKittenCard) {
             playerDrawsKitten(playerThatHasTurn);
             return;
-        } else {
-            playerThatHasTurn.addCard(drawnCard);
-        }
+        } else playerThatHasTurn.addCard(drawnCard);
+
         if(isHumanPlayer) gameWindowController.updateHumanCardListClickListeners();
         startNextTurn();
     }
 
     public void humanPlacesKittenAt(int index) {
+        if(gameover) return;
         Player playerThatHasTurn = getPlayerThatHasTurn();
         if(playerThatHasTurn instanceof HumanPlayer && ((HumanPlayer) playerThatHasTurn).getPlayedDefuseCard()) {
-            mainDeckOfCards.placeCardAtIndex(index, new Card(Card.CardType.EXPLODING_KITTEN));
+            mainDeckOfCards.placeCardAtIndex(index, cardFactory.getCard(CardType.EXPLODING_KITTEN));
             gameWindowController.appendToLog("You've placed the kitten in position: " + index);
             ((HumanPlayer) playerThatHasTurn).setPlayedDefuseCard(false);
             startNextTurn();
@@ -83,8 +87,7 @@ public class Game{
 
 
     public void setNumberOfPlayers(int numberPlayers) {
-        if(numberPlayers < 6)
-            this.numberOfPlayers = 1 + numberPlayers;
+            this.numberOfPlayers = numberPlayers;
     }
 
     public void setCardNodeSelected(Node cardNode) {
@@ -104,12 +107,8 @@ public class Game{
         return (BotPlayer) playerList.get(1);
     }
 
-    private enum MoveType {
-        PLAY, DRAW
-    }
-
     private boolean humanIsAllowedToDraw(Player playerThatHasTurn) {
-
+        if(gameover) return false;
         if (playerThatHasTurn instanceof BotPlayer) {
             gameWindowController.appendToLog("It's not your turn yet!");
             return false;
@@ -122,9 +121,6 @@ public class Game{
     }
 
     private void playerDrawsKitten(Player player) {
-        if(gameover){
-            return;
-        }
         player.setIsExploding(true);
         if (player instanceof BotPlayer) {
             if (player.hasDefuseCard()) {
@@ -149,20 +145,17 @@ public class Game{
     }
 
     private boolean botIsAllowedToPlayCard(Card card) {
-        if(gameover){
-            return false;
-        }
+        if(gameover) return false;
         Player playerThatHasTurn = getPlayerThatHasTurn();
-        if (card.cardType == Card.CardType.DEFUSE && !playerThatHasTurn.getIsExploding()) return false;
-        if (card.cardType == Card.CardType.STEAL && !otherPlayersHaveCards(false)) return false;
+        if (card instanceof DefuseCard && !playerThatHasTurn.getIsExploding()) return false;
+        if (card instanceof StealCard && !otherPlayersHaveCards(false)) return false;
 
         return true;
     }
 
     private boolean humanIsAllowedToPlayCard() {
-        if(gameover){
-            return false;
-        }
+        if(gameover) return false;
+
         Player playerThatHasTurn = getPlayerThatHasTurn();
         if (playerThatHasTurn instanceof BotPlayer) {
             gameWindowController.appendToLog("It's not your turn yet!");
@@ -174,45 +167,32 @@ public class Game{
         }
         // Above condition passed therefore a cardNode has been selected
         Card card = (Card) cardNodeSelected;
-        if (playerThatHasTurn.getIsExploding() && card.cardType != Card.CardType.DEFUSE) {
+        if (playerThatHasTurn.getIsExploding() && !(card instanceof DefuseCard)) {
             gameWindowController.appendToLog("You can't play that, you're on fire!!");
             return false;
         }
-        if (card.cardType == Card.CardType.STEAL && !otherPlayersHaveCards(true)) {
+        if (card instanceof StealCard && !otherPlayersHaveCards(true)) {
             gameWindowController.appendToLog("Other players don't have any cards you can steal.");
             return false;
         }
-        if (card.cardType == Card.CardType.DEFUSE) {
-            if (!playerThatHasTurn.getIsExploding()) {
+        if (card instanceof DefuseCard && !playerThatHasTurn.getIsExploding()) {
                 gameWindowController.appendToLog("You can't play that card right now!");
                 return false;
-            }
         }
         return true;
     }
 
     private boolean otherPlayersHaveCards(boolean currPlayerIsHuman) {
-        if(currPlayerIsHuman) {
-            for (Player otherPlayer : playerList) {
-                if(otherPlayer instanceof BotPlayer && otherPlayer.hasCards())
-                    return true;
-            }
-        } else {
-            Player player = getPlayerThatHasTurn();
-            for (Player otherPlayer : playerList) {
-                if(player != otherPlayer && otherPlayer.hasCards()) {
-                    return true;
-                }
-            }
+        Player player = getPlayerThatHasTurn();
+        for (Player otherPlayer : playerList) {
+            if(player != otherPlayer && otherPlayer.hasCards()) return true;
         }
         return false;
     }
 
-    private void playerPlaysDefuseCard(Player playerThatHasTurn) {
-        if(gameover){
-            return;
-        }
-        logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, new Card(Card.CardType.DEFUSE));
+    public void playerPlaysDefuseCard() {
+        Player playerThatHasTurn = getPlayerThatHasTurn();
+        logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardFactory.getCard(CardType.DEFUSE));
         if(playerThatHasTurn instanceof HumanPlayer) {
             // Played played a valid defuse card
             ((HumanPlayer)playerThatHasTurn).setPlayedDefuseCard(true);
@@ -238,10 +218,10 @@ public class Game{
 
     private void placeKittenRandomlyInDeck() {
         int numCardsInDeck = getNumCardsInDeck();
-        if(numCardsInDeck == 0) mainDeckOfCards.addToDeck(new Card(Card.CardType.EXPLODING_KITTEN));
+        if(numCardsInDeck == 0) mainDeckOfCards.addToDeck(cardFactory.getCard(CardType.EXPLODING_KITTEN));
         else {
             int index = new Random().nextInt(numCardsInDeck);
-            mainDeckOfCards.placeCardAtIndex(index, new Card(Card.CardType.EXPLODING_KITTEN));
+            mainDeckOfCards.placeCardAtIndex(index, cardFactory.getCard(CardType.EXPLODING_KITTEN));
             gameWindowController.appendToLog("Exploding kitten has been placed back into the deck!");
         }
     }
@@ -251,46 +231,22 @@ public class Game{
         gameWindowController.resetcardSelectLabel();
     }
 
-    private void resetBotNodeSelected() {
-        gameWindowController.resetBotSelectLabel();
-    }
+    private void resetBotNodeSelected() { gameWindowController.resetBotSelectLabel();}
 
     private void performCardLogic(Card cardPlayed, Player playerThatHasTurn) {
-        switch (cardPlayed.cardType) {
-            case REVERSE:
-                flipDirection();
-                break;
-            case SKIP:
-                break;
-            case SHUFFLE:
-                mainDeckOfCards.shuffleDeck();
-                break;
-            case SEE_THE_FUTURE:
-                playerPlayedSeeFuture();
-                break;
-            case STEAL:
-                playerPlayedSteal();
-                break;
-            case DEFUSE:
-                playerPlaysDefuseCard(playerThatHasTurn);
-                break;
-        }
+        logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardPlayed);
+        cardPlayed.executeCommand();
         movePlayedCardToPlayedPile(cardPlayed, playerThatHasTurn);
-        if(cardPlayed.cardType != Card.CardType.SEE_THE_FUTURE
-                && cardPlayed.cardType != Card.CardType.STEAL && cardPlayed.cardType != Card.CardType.DEFUSE)
-            logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardPlayed);
-        if(cardPlayed.cardType == Card.CardType.REVERSE || cardPlayed.cardType == Card.CardType.SKIP) {
-            startNextTurn();
-            return;
-        }
-        if(getPlayerThatHasTurn() instanceof BotPlayer) makeRandomBotMove((BotPlayer) getPlayerThatHasTurn());
+
+        if(getPlayerThatHasTurn() instanceof BotPlayer &&
+                !(cardPlayed instanceof SkipCard || cardPlayed instanceof ReverseCard))
+            makeRandomBotMove((BotPlayer) getPlayerThatHasTurn());
     }
 
-    private void playerPlayedSteal() {
+    public void playerPlayedSteal() {
         Player player = getPlayerThatHasTurn();
         Card stolenCard;
         Player playerToDrawFrom = player;
-        logMoveByPlayer(player, MoveType.PLAY, new Card(Card.CardType.STEAL));
         if(player instanceof BotPlayer) {
             while(playerToDrawFrom == player || !playerToDrawFrom.hasCards())
                 playerToDrawFrom = playerList.get(new Random().nextInt(playerList.size()));
@@ -308,19 +264,14 @@ public class Game{
         gameWindowController.updateHumanCardListClickListeners();
     }
 
-    private void playerPlayedSeeFuture() {
+    public void playerPlayedSeeFuture() {
         Player player = getPlayerThatHasTurn();
-        logMoveByPlayer(player, MoveType.PLAY, new Card(Card.CardType.SEE_THE_FUTURE));
-        if(player instanceof HumanPlayer) {
-            logTopThreeCards();
-        }
+        if(player instanceof HumanPlayer) logTopThreeCards();
     }
 
     private void logTopThreeCards() {
         gameWindowController.appendToLog("Top three cards are:");
-        for (Card card : mainDeckOfCards.seeTopThreeCards()) {
-            gameWindowController.appendToLog(card.toString());
-        }
+        for (Card card : mainDeckOfCards.seeTopThreeCards()) gameWindowController.appendToLog(card.toString());
     }
 
     private void setupPlayers() {
@@ -338,14 +289,12 @@ public class Game{
     private void dealCards(){
         int numberOfCardsInHand = 5;
         for (Player player: playerList) {
-            player.addCard(new Card(Card.CardType.DEFUSE));
-            for (int i = 0; i < numberOfCardsInHand - 1; i++) {
-                player.addCard(mainDeckOfCards.drawCard());
-            }
+            player.addCard(cardFactory.getCard(CardType.DEFUSE));
+            for (int i = 0; i < numberOfCardsInHand - 1; i++) player.addCard(mainDeckOfCards.drawCard());
         }
     }
 
-    private void startNextTurn() {
+    public void startNextTurn() {
         gameWindowController.setNumCardsInDeckLabel(getNumCardsInDeck());
         turnNumber = (reverse ? (turnNumber - 1) : (turnNumber + 1)) % playerList.size();
         turnNumber = (turnNumber < 0 ? turnNumber + playerList.size() : turnNumber);
@@ -363,15 +312,11 @@ public class Game{
     }
 
     private void makeRandomBotMove(BotPlayer botPlayer) {
-        int moveType = new Random().nextInt(2);
-        if(!botPlayer.hasNonDefuseCards()) {
-            playerDraws(false);
-        } else {
-            if (moveType == 0) {
-                playerDraws(false);
-            } else {
-                makeBotPlayCard(botPlayer);
-            }
+        if(!botPlayer.hasNonDefuseCards()) playerDraws(false);
+        else {
+            int moveType = new Random().nextInt(MoveType.values().length);
+            if (moveType == 0) playerDraws(false);
+            else makeBotPlayCard(botPlayer);
         }
     }
 
@@ -380,9 +325,7 @@ public class Game{
         playerPlaysCard(cardToPlay, false);
     }
 
-    private Player getPlayerThatHasTurn() {
-        return playerList.get(turnNumber);
-    }
+    private Player getPlayerThatHasTurn() { return playerList.get(turnNumber); }
 
     private void logMoveByPlayer(Player player, MoveType moveType, Card card) {
         String playerTitle = (player instanceof HumanPlayer ? "You" : player.toString());
@@ -390,7 +333,7 @@ public class Game{
         else gameWindowController.appendToLog(playerTitle + " draw(s) a " + card.toString() + " card.");
     }
 
-    private void flipDirection() {
-        reverse = !reverse;
-    }
+    public void flipDirection() { reverse = !reverse; }
+
+    public void shuffleDeck() { mainDeckOfCards.shuffleDeck(); }
 }

@@ -1,11 +1,14 @@
 package softwaredesign.model;
 
+import softwaredesign.gamelogic.cards.Card;
+import softwaredesign.gamelogic.cards.DefuseCard;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class BotPlayer extends Player{
-    private ArrayList<Card> cardList;
-    private BotAvatar botAvatar;
+    private final ArrayList<Card> cardList;
+    private final BotAvatar botAvatar;
 
     public BotPlayer(int playerNumber) {
         super(playerNumber);
@@ -26,7 +29,7 @@ public class BotPlayer extends Player{
     @Override
     public boolean hasDefuseCard() {
         for(Card card : cardList) {
-            if(card.cardType == Card.CardType.DEFUSE) return true;
+            if(card instanceof DefuseCard) return true;
         }
         return false;
     }
@@ -37,14 +40,14 @@ public class BotPlayer extends Player{
 
     public Card getNonDefuseCard() {
         for (Card card: cardList) {
-            if(card.cardType != Card.CardType.DEFUSE) return card;
+            if(!(card instanceof DefuseCard)) return card;
         }
         return null;
     }
 
     public boolean hasNonDefuseCards() {
         for (Card card: cardList) {
-            if(card.cardType != Card.CardType.DEFUSE) return true;
+            if(!(card instanceof DefuseCard)) return true;
         }
         return false;
     }
@@ -52,7 +55,7 @@ public class BotPlayer extends Player{
     public Card extractDefuseCard() {
         Card defuseCard = null;
         for (Card card: cardList)
-            if(card.cardType == Card.CardType.DEFUSE) {
+            if(card instanceof DefuseCard) {
                 defuseCard = card;
                 cardList.remove(card);
                 break;
