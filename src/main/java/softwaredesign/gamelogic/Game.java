@@ -1,4 +1,4 @@
-package softwaredesign;
+package softwaredesign.gamelogic;
 
 import javafx.scene.Node;
 import softwaredesign.controller.GameWindowController;
