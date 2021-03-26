@@ -12,6 +12,10 @@ public abstract class Card extends Parent {
 
     protected Card(Command command) {
         this.command = command;
+        makeCardRectangle();
+    }
+
+    private void makeCardRectangle() {
         cardRectangle = new Rectangle(80, 100);
         cardRectangle.setArcWidth(20);
         cardRectangle.setArcHeight(20);
@@ -21,10 +25,11 @@ public abstract class Card extends Parent {
         getChildren().add(new StackPane(cardRectangle, text));
     }
 
-
     public void executeCommand() {
         command.execute();
     }
+
+    @Override
     public abstract String toString();
 
 }

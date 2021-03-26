@@ -16,6 +16,12 @@ public class BotAvatar extends Parent {
     public BotAvatar(int botNumber) {
         this.botNumber = botNumber;
         this.numOfCards = 0;
+        numberOfCardsText = new Text("Cards: " + numOfCards);
+        makeBotRectangle();
+
+    }
+
+    private void makeBotRectangle() {
         Rectangle botRectangle = new Rectangle(80, 80);
         botRectangle.setArcWidth(20);
         botRectangle.setArcHeight(20);
@@ -23,7 +29,6 @@ public class BotAvatar extends Parent {
 
         Text playerName = new Text(toString());
         playerName.setWrappingWidth(70);
-        numberOfCardsText = new Text("Cards: " + numOfCards);
         getChildren().add(new VBox(new StackPane(botRectangle, playerName), numberOfCardsText));
     }
 
