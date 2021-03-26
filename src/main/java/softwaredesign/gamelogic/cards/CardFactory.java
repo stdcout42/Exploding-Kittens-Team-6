@@ -25,6 +25,7 @@ public class CardFactory {
             case DEFUSE:
                 return new DefuseCard(commandFactory.getCommand(cardType));
             case EXPLODING_KITTEN:
+                // Exploding Kitten card has no command - thus it's assumed that it's never executed
                 return new ExplodingKittenCard(null);
             default:
                 return null;

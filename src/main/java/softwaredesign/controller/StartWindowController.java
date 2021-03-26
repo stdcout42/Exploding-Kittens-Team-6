@@ -10,7 +10,7 @@ import javafx.scene.control.ChoiceBox;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class StartWindowController extends WindowControler{
+public class StartWindowController extends WindowController {
     public StartWindowController(Game game, ViewFactory viewFactory, String fxmlName) {
         super(game, viewFactory, fxmlName);
     }

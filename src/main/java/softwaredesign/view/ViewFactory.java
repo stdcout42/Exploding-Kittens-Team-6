@@ -9,7 +9,7 @@ import javafx.stage.StageStyle;
 import softwaredesign.gamelogic.Game;
 import softwaredesign.controller.GameWindowController;
 import softwaredesign.controller.StartWindowController;
-import softwaredesign.controller.WindowControler;
+import softwaredesign.controller.WindowController;
 
 import java.io.IOException;
 
@@ -27,12 +27,12 @@ public class ViewFactory {
     }
 
     public void showStartWindow() {
-        WindowControler startWindowController = new StartWindowController(game, this,
+        WindowController startWindowController = new StartWindowController(game, this,
                 startWindowFxmlPath);
         initializeStage(startWindowController);
     }
 
-    private void initializeStage(WindowControler controller) {
+    private void initializeStage(WindowController controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
         fxmlLoader.setController(controller);
         Parent parent;
@@ -51,7 +51,7 @@ public class ViewFactory {
     }
 
     public void showGameWindow() {
-        WindowControler gameWindowContoller = new GameWindowController(game, this,
+        WindowController gameWindowContoller = new GameWindowController(game, this,
                 gameWindowFxmlPath);
         initializeStage(gameWindowContoller);
     }

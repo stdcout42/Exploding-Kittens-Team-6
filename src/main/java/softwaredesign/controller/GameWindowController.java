@@ -15,7 +15,7 @@ import softwaredesign.view.ViewFactory;
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameWindowController extends WindowControler{
+public class GameWindowController extends WindowController {
     public GameWindowController(Game game, ViewFactory viewFactory, String fxmlName) {
         super(game, viewFactory, fxmlName);
     }
