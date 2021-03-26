@@ -1,7 +1,7 @@
 package softwaredesign.model;
 
-import softwaredesign.gamelogic.cards.Card;
-import softwaredesign.gamelogic.cards.DefuseCard;
+import softwaredesign.model.cards.Card;
+import softwaredesign.model.cards.DefuseCard;
 
 import java.util.ArrayList;
 import java.util.Random;

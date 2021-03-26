@@ -1,6 +1,6 @@
 package softwaredesign.model;
 
-import softwaredesign.gamelogic.cards.Card;
+import softwaredesign.model.cards.Card;
 
 public abstract class Player {
 

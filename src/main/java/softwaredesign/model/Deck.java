@@ -1,8 +1,8 @@
 package softwaredesign.model;
 
-import softwaredesign.gamelogic.cards.Card;
-import softwaredesign.gamelogic.cards.CardFactory;
-import softwaredesign.gamelogic.cards.CardType;
+import softwaredesign.model.cards.Card;
+import softwaredesign.model.cards.CardFactory;
+import softwaredesign.model.cards.CardType;
 
 import java.util.ArrayList;
 import java.util.Collections;

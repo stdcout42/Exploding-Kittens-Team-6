@@ -6,7 +6,7 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import softwaredesign.gamelogic.Game;
+import softwaredesign.model.gamelogic.Game;
 import softwaredesign.controller.GameWindowController;
 import softwaredesign.controller.StartWindowController;
 import softwaredesign.controller.WindowController;

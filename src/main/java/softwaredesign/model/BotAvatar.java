@@ -1,6 +1,5 @@
 package softwaredesign.model;
 
-import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
 import javafx.scene.layout.VBox;
