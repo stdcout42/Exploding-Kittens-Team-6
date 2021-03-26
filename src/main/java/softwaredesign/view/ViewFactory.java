@@ -19,16 +19,15 @@ import java.io.IOException;
 public class ViewFactory {
     private final String startWindowFxmlPath = "/fxml/StartWindow.fxml";
     private final String gameWindowFxmlPath = "/fxml/GameWindow.fxml";
-
-    private final Game game;
+    private final WindowController startWindowController;
+    private final WindowController gameWindowController;
 
     public ViewFactory(Game game) {
-        this.game = game;
+        startWindowController = new StartWindowController(game, this, startWindowFxmlPath);
+        gameWindowController = new GameWindowController(game, this, gameWindowFxmlPath);
     }
 
     public void showStartWindow() {
-        WindowController startWindowController = new StartWindowController(game, this,
-                startWindowFxmlPath);
         initializeStage(startWindowController);
     }
 
@@ -51,9 +50,7 @@ public class ViewFactory {
     }
 
     public void showGameWindow() {
-        WindowController gameWindowContoller = new GameWindowController(game, this,
-                gameWindowFxmlPath);
-        initializeStage(gameWindowContoller);
+        initializeStage(gameWindowController);
     }
 
     public void closeStage(Stage stage) {
