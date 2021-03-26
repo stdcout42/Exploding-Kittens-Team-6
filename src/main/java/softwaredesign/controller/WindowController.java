@@ -12,7 +12,7 @@ public abstract class WindowController implements Initializable {
     protected ViewFactory viewFactory;
     private final String fxmlName;
 
-    public WindowController(Game game, ViewFactory viewFactory, String fxmlName) {
+    protected WindowController(Game game, ViewFactory viewFactory, String fxmlName) {
         this.game = game;
         this.viewFactory = viewFactory;
         this.fxmlName = fxmlName;
