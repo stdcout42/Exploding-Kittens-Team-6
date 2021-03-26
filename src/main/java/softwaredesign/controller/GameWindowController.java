@@ -7,9 +7,9 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
-import softwaredesign.gamelogic.Game;
+import softwaredesign.model.gamelogic.Game;
 import softwaredesign.model.BotAvatar;
-import softwaredesign.gamelogic.cards.Card;
+import softwaredesign.model.cards.Card;
 import softwaredesign.view.ViewFactory;
 
 import java.net.URL;

@@ -2,7 +2,7 @@ package softwaredesign;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
-import softwaredesign.gamelogic.Game;
+import softwaredesign.model.gamelogic.Game;
 import softwaredesign.view.ViewFactory;
 
 /**

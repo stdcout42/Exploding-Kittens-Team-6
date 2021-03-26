@@ -2,8 +2,8 @@ package softwaredesign.model;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
-import softwaredesign.gamelogic.cards.Card;
-import softwaredesign.gamelogic.cards.DefuseCard;
+import softwaredesign.model.cards.Card;
+import softwaredesign.model.cards.DefuseCard;
 
 import java.util.Random;
 

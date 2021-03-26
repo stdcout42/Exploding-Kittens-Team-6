@@ -3,7 +3,7 @@ package softwaredesign.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.stage.Stage;
-import softwaredesign.gamelogic.Game;
+import softwaredesign.model.gamelogic.Game;
 import softwaredesign.view.ViewFactory;
 import javafx.scene.control.ChoiceBox;
 
