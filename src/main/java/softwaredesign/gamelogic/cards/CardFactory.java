@@ -25,7 +25,7 @@ public class CardFactory {
             case DEFUSE:
                 return new DefuseCard(commandFactory.getCommand(cardType));
             case EXPLODING_KITTEN:
-                return new ExplodingKittenCard(commandFactory.getCommand(cardType));
+                return new ExplodingKittenCard(null);
             default:
                 return null;
         }
