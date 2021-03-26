@@ -94,6 +94,10 @@ public class Game{
         this.cardNodeSelected = cardNode;
     }
 
+    public void flipDirection() { reverse = !reverse; }
+
+    public void shuffleDeck() { mainDeckOfCards.shuffleDeck(); }
+
     public int getNumCardsInDeck() {
         return mainDeckOfCards.getNumOfCards();
     }
@@ -332,8 +336,4 @@ public class Game{
         if(moveType == MoveType.PLAY) gameWindowController.appendToLog(playerTitle + " play(s) a " + card.toString() + " card.");
         else gameWindowController.appendToLog(playerTitle + " draw(s) a " + card.toString() + " card.");
     }
-
-    public void flipDirection() { reverse = !reverse; }
-
-    public void shuffleDeck() { mainDeckOfCards.shuffleDeck(); }
 }

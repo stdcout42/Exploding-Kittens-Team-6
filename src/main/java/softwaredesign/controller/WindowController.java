@@ -7,12 +7,12 @@ import softwaredesign.view.ViewFactory;
 /**
  * Subclasses of WindowController control the respective windows 
  */
-public abstract class WindowControler implements Initializable {
+public abstract class WindowController implements Initializable {
     protected Game game;
     protected ViewFactory viewFactory;
     private final String fxmlName;
 
-    public WindowControler(Game game, ViewFactory viewFactory, String fxmlName) {
+    public WindowController(Game game, ViewFactory viewFactory, String fxmlName) {
         this.game = game;
         this.viewFactory = viewFactory;
         this.fxmlName = fxmlName;
