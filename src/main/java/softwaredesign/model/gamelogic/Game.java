@@ -39,7 +39,8 @@ public class Game{
         if(isHumanPlayer && !humanIsAllowedToDraw(playerThatHasTurn)) return;
 
         Card drawnCard = mainDeckOfCards.drawCard();
-        logMoveByPlayer(getPlayerThatHasTurn(), MoveType.DRAW, drawnCard);
+        if(isHumanPlayer) logMoveByPlayer(getPlayerThatHasTurn(), MoveType.DRAW, drawnCard);
+        else gameWindowController.appendToLog(String.format("%s draws a card!", playerThatHasTurn.toString()));
 
         if(drawnCard instanceof ExplodingKittenCard) {
             playerDrawsKitten(playerThatHasTurn);
@@ -196,7 +197,6 @@ public class Game{
 
     public void playerPlaysDefuseCard() {
         Player playerThatHasTurn = getPlayerThatHasTurn();
-        logMoveByPlayer(playerThatHasTurn, MoveType.PLAY, cardFactory.getCard(CardType.DEFUSE));
         if(playerThatHasTurn instanceof HumanPlayer) {
             // Played played a valid defuse card
             ((HumanPlayer)playerThatHasTurn).setPlayedDefuseCard(true);
