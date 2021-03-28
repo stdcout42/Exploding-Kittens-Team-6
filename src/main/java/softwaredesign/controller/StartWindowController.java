@@ -36,6 +36,6 @@ public class StartWindowController extends WindowController {
 
     @Override
     public void initialize(URL location, ResourceBundle resources) {
-
+        optionsButton.getSelectionModel().selectLast();
     }
 }

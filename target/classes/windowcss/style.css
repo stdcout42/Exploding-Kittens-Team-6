@@ -27,3 +27,19 @@ Label, JFXTextField {
     -fx-background-color:  #FBCE00;
 }
 
+ChoiceBox {
+    -fx-background-color: linear-gradient(to right top, #d4a112, #dbae10, #e1bc0f, #e7ca0f, #ebd812);
+    -fx-mark-color: red;
+    -fx-font-weight: bold;
+}
+ChoiceBox .context-menu{
+    -fx-background-color: linear-gradient(to right top, #d4a112, #dbae10, #e1bc0f, #e7ca0f, #ebd812);
+}
+
+ChoiceBox .menu-item > .label {
+    -fx-text-fill: white;
+}
+ChoiceBox .menu-item:focused { -fx-background-color: red; }
+
+
+
