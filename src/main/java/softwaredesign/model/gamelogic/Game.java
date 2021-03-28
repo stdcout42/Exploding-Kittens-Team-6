@@ -122,6 +122,11 @@ public class Game{
             gameWindowController.appendToLog("You're exploding, you can't draw a card right now!");
             return false;
         }
+
+        if(((HumanPlayer)playerThatHasTurn).getPlayedDefuseCard()) {
+            gameWindowController.appendToLog("Place the kitten back first!");
+            return false;
+        }
         return true;
     }
 
@@ -183,6 +188,11 @@ public class Game{
         if (card instanceof DefuseCard && !playerThatHasTurn.getIsExploding()) {
                 gameWindowController.appendToLog("You can't play that card right now!");
                 return false;
+        }
+
+        if(((HumanPlayer)playerThatHasTurn).getPlayedDefuseCard()) {
+            gameWindowController.appendToLog("Place the kitten back in the deck first!");
+            return false;
         }
         return true;
     }
