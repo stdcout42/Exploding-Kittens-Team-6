@@ -1,4 +1,4 @@
-package softwaredesign.model;
+package softwaredesign.model.players;
 
 import javafx.collections.ObservableList;
 import javafx.scene.Node;
