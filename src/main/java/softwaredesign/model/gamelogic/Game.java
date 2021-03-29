@@ -4,6 +4,10 @@ import javafx.scene.Node;
 import softwaredesign.controller.GameWindowController;
 import softwaredesign.model.*;
 import softwaredesign.model.cards.*;
+import softwaredesign.model.players.BotAvatar;
+import softwaredesign.model.players.BotPlayer;
+import softwaredesign.model.players.HumanPlayer;
+import softwaredesign.model.players.Player;
 
 import java.util.ArrayList;
 import java.util.Random;

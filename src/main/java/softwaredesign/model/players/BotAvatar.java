@@ -1,4 +1,4 @@
-package softwaredesign.model;
+package softwaredesign.model.players;
 
 import javafx.scene.Parent;
 import javafx.scene.layout.StackPane;
