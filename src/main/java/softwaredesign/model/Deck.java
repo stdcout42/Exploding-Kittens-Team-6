@@ -1,23 +1,28 @@
 package softwaredesign.model;
 
+import softwaredesign.model.cards.Card;
+import softwaredesign.model.cards.CardFactory;
+import softwaredesign.model.cards.CardType;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-
 public class Deck {
-    private List<Card> deckPile;
+    private final List<Card> deckPile;
+    private final CardFactory cardFactory;
 
-    public Deck() {
+    public Deck(CardFactory cardFactory) {
+        this.cardFactory = cardFactory;
         deckPile = new ArrayList<>();
         addPrePlayerSetupCards();
         shuffleDeck();
     }
 
     private void addPrePlayerSetupCards() {
-        for (int i = 0; i < Card.CardType.values().length -2; i++) { // length -2 as defuse and exploding kittens are the last two cards in the Cardtype enum.
-            for (int j = 0; j < Card.CardType.getNumOfCards(Card.CardType.values()[i]); j++) {
-                deckPile.add(new Card(Card.CardType.values()[i]));
+        for (int i = 0; i < CardType.values().length -2; i++) { // length -2 as defuse and exploding kittens are the last two cards in the Cardtype enum.
+            for (int j = 0; j < CardType.getNumOfCards(CardType.values()[i]); j++) {
+                deckPile.add(cardFactory.getCard(CardType.values()[i]));
             }
         }
     }
@@ -43,11 +48,11 @@ public class Deck {
     }
 
     public void addPostPlayerSetupCards(int numberOfPlayers) {
-        for (int i = 0; i < Card.CardType.getNumOfCards(Card.CardType.DEFUSE) - numberOfPlayers; i++) {
-            deckPile.add(new Card(Card.CardType.DEFUSE));
+        for (int i = 0; i < CardType.getNumOfCards(CardType.DEFUSE) - numberOfPlayers; i++) {
+            deckPile.add(cardFactory.getCard((CardType.DEFUSE)));
         }
         for (int i = 0; i < numberOfPlayers - 1; i++) {
-            deckPile.add(new Card(Card.CardType.EXPLODING_KITTEN));
+            deckPile.add(cardFactory.getCard(CardType.EXPLODING_KITTEN));
         }
     }
 

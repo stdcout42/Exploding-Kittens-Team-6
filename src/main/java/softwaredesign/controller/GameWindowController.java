@@ -7,15 +7,15 @@ import javafx.scene.Node;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextArea;
 import javafx.scene.layout.HBox;
-import softwaredesign.Game;
-import softwaredesign.model.BotAvatar;
-import softwaredesign.model.Card;
+import softwaredesign.model.gamelogic.Game;
+import softwaredesign.model.players.BotAvatar;
+import softwaredesign.model.cards.Card;
 import softwaredesign.view.ViewFactory;
 
 import java.net.URL;
 import java.util.ResourceBundle;
 
-public class GameWindowController extends WindowControler{
+public class GameWindowController extends WindowController {
     public GameWindowController(Game game, ViewFactory viewFactory, String fxmlName) {
         super(game, viewFactory, fxmlName);
     }

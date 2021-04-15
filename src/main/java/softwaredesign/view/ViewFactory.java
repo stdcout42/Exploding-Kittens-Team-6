@@ -6,13 +6,12 @@ import javafx.scene.Scene;
 import javafx.scene.paint.Color;
 import javafx.stage.Stage;
 import javafx.stage.StageStyle;
-import softwaredesign.Game;
+import softwaredesign.model.gamelogic.Game;
 import softwaredesign.controller.GameWindowController;
 import softwaredesign.controller.StartWindowController;
-import softwaredesign.controller.WindowControler;
+import softwaredesign.controller.WindowController;
 
 import java.io.IOException;
-import java.util.ArrayList;
 
 /**
  * ViewFactory will produce views/windows when called from a controller or initially from App
@@ -20,20 +19,19 @@ import java.util.ArrayList;
 public class ViewFactory {
     private final String startWindowFxmlPath = "/fxml/StartWindow.fxml";
     private final String gameWindowFxmlPath = "/fxml/GameWindow.fxml";
-
-    private Game game;
+    private final WindowController startWindowController;
+    private final WindowController gameWindowController;
 
     public ViewFactory(Game game) {
-        this.game = game;
+        startWindowController = new StartWindowController(game, this, startWindowFxmlPath);
+        gameWindowController = new GameWindowController(game, this, gameWindowFxmlPath);
     }
 
     public void showStartWindow() {
-        WindowControler startWindowController = new StartWindowController(game, this,
-                startWindowFxmlPath);
         initializeStage(startWindowController);
     }
 
-    private void initializeStage(WindowControler controller) {
+    private void initializeStage(WindowController controller) {
         FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource(controller.getFxmlName()));
         fxmlLoader.setController(controller);
         Parent parent;
@@ -52,9 +50,7 @@ public class ViewFactory {
     }
 
     public void showGameWindow() {
-        WindowControler gameWindowContoller = new GameWindowController(game, this,
-                gameWindowFxmlPath);
-        initializeStage(gameWindowContoller);
+        initializeStage(gameWindowController);
     }
 
     public void closeStage(Stage stage) {
